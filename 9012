@@ -1,0 +1,62 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+class Main {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+//		포인터 선언
+//		N 입력 받기= 반복 횟수
+//		문자열 받기-> input에 저장
+//		input을 split으로 쪼개서 '('와 ')'를 '0'과 '1'으로 변환하여 arr에 순서대로 저장
+//		포인터로 인덱스를 가리키며 연속된 두 인덱스가 01일 경우 remove
+//		arr길이만큼 반복하되 한 바퀴를 돌았는데 arr의 길이에 변동이 없으면, break;
+//		arr길이만큼 반복한 결과, arr의 값이 남았다 = no
+//		안남았다 = yes
+
+		int pointer = 0;
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int n = Integer.parseInt(br.readLine());
+
+		for (int i = 0; i < n; i++) {
+			String input = br.readLine();
+			ArrayList list = new ArrayList();
+
+			for (int j = 0; j < input.length(); j++) { // ArrayList만들기
+				if (input.charAt(j) == '(') {
+					list.add(1);
+				} else {
+					list.add(0);
+				}
+			}
+
+			for (int k = 0; k < list.size() - 1; k++) {
+
+				String str = (list.get(k) + "" + list.get(k + 1));
+				
+				if (str.equals("10")) {
+					list.remove(k+1);
+					list.remove(k);
+					k = -1;
+//					System.out.println("k: " + k + "---------");
+//					System.out.println(list);
+				}
+			}
+
+			if (list.isEmpty()) {
+				bw.write("YES\n");
+			} else {
+				bw.write("NO\n");
+			}
+		}
+		
+		br.close();
+		bw.flush();
+		bw.close();
+	}
+}
