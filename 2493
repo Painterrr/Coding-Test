@@ -1,0 +1,70 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+class Main {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		Stack<int[]> stack = new Stack<>();
+//		stack.push(new int[] {input, i});
+//		stack.peek()[i]; /[0]= value/ [1]= index
+
+		int n = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		for (int i = 1; i <= n; i++) {
+
+			int input = Integer.parseInt(st.nextToken());
+
+			if (stack.empty()) { // 스택 초기값
+				stack.push(new int[] { input, i });
+//				System.out.println("first i: " + i);
+//				System.out.println("first stack.peek()[0]: " + stack.peek()[0]);
+				sb.append("0 ");
+
+			} else {
+				if (input > stack.peek()[0]) {
+					while (input > stack.peek()[0]) {
+						stack.pop();
+						if (stack.empty()) {
+							break;
+						}
+//						System.out.println("in While, loop number: " + i);
+//						System.out.println("in While, input: " + input);
+//						System.out.println("in While, stack.peek()[0]: " + stack.peek()[0]);
+//						System.out.println("in while, stack.peek()[1]: " + stack.peek()[1]);
+					}
+					if (stack.empty()) { // empty일 경우, 0을 넣고, 그렇지 않을 경우 peek -> 1
+						stack.push(new int[] { input, i });
+//						System.out.println("loop number: " + i);
+//						System.out.println("input: " + input);
+//						System.out.println("stack.peek()[0]: " + stack.peek()[0]);
+//						System.out.println("stack.peek()[1]: " + stack.peek()[1]);
+						sb.append("0 ");
+					} else {
+						sb.append(stack.peek()[1] + " ");
+						stack.push(new int[] { input, i });
+//						System.out.println("loop number: " + i);
+//						System.out.println("input: " + input);
+//						System.out.println("stack.peek()[0]: " + stack.peek()[0]);
+//						System.out.println("stack.peek()[1]: " + stack.peek()[1]);
+					}
+
+				} else {
+					sb.append(stack.peek()[1] + " ");
+					stack.push(new int[] { input, i });
+//					System.out.println("loop number: " + i);
+//					System.out.println("input: " + input);
+//					System.out.println("stack.peek()[0]: " + stack.peek()[0]);
+				}
+			}
+			//System.out.println("------------------------------");
+		}
+
+		System.out.println(sb.toString());
+	}
+}
