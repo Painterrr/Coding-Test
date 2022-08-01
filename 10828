@@ -1,0 +1,92 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+class Main {
+
+	int top;
+	int[] arr;
+
+	public Main(int X) {
+		top = -1;
+		arr = new int[X];
+	}
+
+	public int empty() {
+		if (top == -1) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	public void push(int N) {
+		arr[++top] = N;
+	}
+
+	public int pop() {
+		if (empty() == 1) {
+			return -1;
+		} else {
+			return arr[top--];
+		}
+	}
+
+	public int size() {
+		if (top == -1) {
+			return 0;
+		} else {
+			return top+1;
+		}
+	}
+
+	public int top() {
+		if (empty() == 1) {
+			return -1;
+		} else {
+			return arr[top];
+		}
+	}
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int N = Integer.parseInt(br.readLine());
+		Main m = new Main(N);
+		
+		for(int i = 0; i < N; i++) {
+
+			String input = br.readLine();
+		
+			switch(input.split(" ")[0]) {
+			case "push":
+				int X = Integer.parseInt(input.split(" ")[1]);
+				m.push(X);
+				break;
+				
+			case "pop":
+				bw.write(m.pop() + "\n");
+				break;
+				
+			case "size":
+				bw.write(m.size() + "\n");
+				break;
+				
+			case "empty":
+				bw.write(m.empty() + "\n");
+				break;
+				
+			case "top":
+				bw.write(m.top() + "\n");
+				break;
+			}
+		}
+		br.close();
+		bw.flush();
+		bw.close();
+	}
+}
