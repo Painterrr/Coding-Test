@@ -1,0 +1,109 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+class Main {
+
+	int h = 0;
+	int t = -1;
+	int[] arr;
+
+	public Main(int N) {
+		arr = new int[N];
+	};
+
+	public int empty() {
+		if (size()==0) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	public int push(int x) {
+		if (h == -1) {
+			h = 0;
+		}
+		return arr[++t] = x;
+	}
+
+	public int pop() {
+		if (empty() == 1) {
+			return -1;
+		} else {
+			return arr[h++];
+		}
+	}
+
+	public int size() {
+		return (t - h + 1);
+	}
+
+	public int front() {
+		if (empty() == 1) {
+			return -1;
+		} else {
+			return arr[h];
+		}
+	}
+
+	public int back() {
+		if (empty() == 1) {
+			return -1;
+		} else {
+			return arr[t];
+		}
+	}
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int N = Integer.parseInt(br.readLine()); // 첫째줄 N입력
+		Main q = new Main(N);
+
+		
+		for (int i = 0; i < N; i++) { // N만큼 반복
+
+			String input = br.readLine(); // 명령어 입력(N만큼 반복)
+
+			switch (input.split(" ")[0]) {
+			case "push":
+				int x = Integer.parseInt(input.split(" ")[1]);
+				q.push(x);
+//				bw.write("push h: " + q.h + "\n");
+//				bw.write("push t: " + q.t + "\n");
+				break;
+
+			case "pop":
+				bw.write(q.pop() + "\n");
+//				bw.write("pop h: " + q.h + "\n");
+//				bw.write("pop t: " + q.t + "\n");
+				break;
+
+			case "size":
+				bw.write(q.size() + "\n");
+				break;
+
+			case "empty":
+				bw.write(q.empty() + "\n");
+				break;
+
+			case "front":
+				bw.write(q.front() + "\n");
+				break;
+
+			case "back":
+				bw.write(q.back() + "\n");
+				break;
+			}
+		}
+
+		br.close();
+		bw.flush(); //버퍼에 모았다가 한 번에 출력
+		bw.close();
+	}
+}
