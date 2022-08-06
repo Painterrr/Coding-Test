@@ -1,0 +1,62 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+class Main {
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		//n= 트럭 개수, w= 다리 길이, l= 다리 최대 하중
+		int n = Integer.parseInt(st.nextToken());
+		int w = Integer.parseInt(st.nextToken());
+		int l = Integer.parseInt(st.nextToken());
+		
+		Queue<Integer> truck = new LinkedList<>();
+		Queue<Integer> onBridge = new LinkedList<>();
+		
+		st = new StringTokenizer(br.readLine());
+		
+		//t= 시간, tw= 다리 위 트럭 무게
+		int t = 0;
+		int tw = 0;
+		
+		//initialize truck queue
+		for(int i = 0; i < n; i++) {
+			truck.offer(Integer.parseInt(st.nextToken()));
+		}
+//		System.out.println(truck.peek());
+		
+		//initialize onBridge queue
+		for(int i = 0; i < w; i++) {
+			onBridge.offer(0);
+		}
+		
+		while(!onBridge.isEmpty()) {
+//			System.out.println("loop" + t + "---------------");
+			t++;
+//			System.out.println("onBridge.peek(): " + onBridge.peek());
+			tw -= onBridge.poll();
+//			System.out.println("tw: " + tw);
+//			System.out.println("truck.peek(): " + truck.peek());
+//			System.out.println("tw: " + tw);
+			
+			if(!truck.isEmpty()) {
+				if((tw + truck.peek()) > l) {
+					onBridge.offer(0);
+//					System.out.println("tw: " + tw);
+				} else {
+					tw += truck.peek();
+					onBridge.offer(truck.poll());
+//					System.out.println("tw: " + tw);
+				}
+			}
+		}
+		
+		System.out.println(t);				
+	}
+}
