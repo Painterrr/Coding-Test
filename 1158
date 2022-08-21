@@ -1,0 +1,56 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+class Main {
+	public static void main(String[] args) throws IOException {
+
+		Queue<Integer> q = new LinkedList<>();
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
+
+		int n = Integer.parseInt(st.nextToken());
+		int k = Integer.parseInt(st.nextToken());
+		int check = 1;
+
+		for (int i = 0; i < n; i++) {
+			q.offer(i + 1);
+		}
+		
+		sb.append("<");
+		
+		while (!q.isEmpty()) {
+//			System.out.println("loop is working");
+			
+			if(check == k) {
+				check = 0;
+//				System.out.println("if");
+//				System.out.println("check: " + check);
+//				System.out.println("q: " + q.peek());
+				sb.append(q.poll());
+				
+				if(!q.isEmpty()) {
+					sb.append(", ");
+				}
+				
+				
+			} else {
+//				System.out.println("else");
+//				System.out.println("check:" + check);
+//				System.out.println("q: " + q.peek());
+				q.offer(q.poll());
+			}
+			
+			check++;
+//			System.out.println("check++: " + check);	
+		}
+		
+		br.close();
+		System.out.println(sb.toString() + ">");
+	}
+}
