@@ -1,0 +1,15 @@
+list = list()
+
+while True:
+    try:
+        n = int(input())
+        list.append(n)
+    except:
+        break
+
+max = max(list)
+print(max)
+
+for i in range(len(list)):
+    if list[i] == max:
+        print(i + 1)
