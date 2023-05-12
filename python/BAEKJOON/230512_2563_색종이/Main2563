@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+table = [[0] * 101 for i in range(101)]
+area = 0
+
+for _ in range(int(input())):
+    x, y = map(int, input().split())
+    x -= 1
+    y -= 1
+    
+    for i in range(10):
+        for j in range(10):
+            if table[x + i][y + j] == 0:
+                table[x + i][y + j] = 1
+                area += 1
+                
+print(area)
