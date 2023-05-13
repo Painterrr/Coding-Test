@@ -1,0 +1,13 @@
+import sys
+input = sys.stdin.readline
+
+n = input().rstrip()
+numList = []
+
+for s in n:
+    numList.append(int(s))
+
+numList.sort(reverse=True)
+
+for i in numList:
+    print(i, end="")
