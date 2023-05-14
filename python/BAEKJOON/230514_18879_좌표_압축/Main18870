@@ -1,0 +1,14 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+arr = list(map(int, input().split()))
+idxs = sorted(list(set(arr)))
+
+dict = {}
+for i in range(len(idxs)):
+    dict[idxs[i]] = i
+    
+for n in arr:
+    print(dict[n], end = ' ')
