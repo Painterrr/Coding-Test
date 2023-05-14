@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+coords = []
+
+for _ in range(int(input())):
+    x, y = map(int, input().split())
+    coords.append((x, y))
+
+print(coords)
+
+coords.sort(key = lambda x : (x[1], x[0]))
+# coords의 원소들을 x라 할 건데,
+# 각 원소마다 x[1]을 우선으로 정렬하고
+# x[0]을 차선으로 정렬해라
+
+print(coords)
+
+for coord in coords:
+    print(coord[0], coord[1])
