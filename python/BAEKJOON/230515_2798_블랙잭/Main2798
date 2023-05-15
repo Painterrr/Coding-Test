@@ -1,0 +1,14 @@
+from itertools import combinations
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+cards = list(map(int, input().split()))
+biggestSum = 0
+
+for card in combinations(cards, 3):
+    tmpSum = sum(card)
+    if biggestSum < tmpSum <= m:
+        biggestSum = tmpSum
+
+print(biggestSum)
