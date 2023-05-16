@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+
+names = {}
+idxs = {}
+for i in range(1, n + 1):
+    name = input().rstrip()
+    names[name] = i
+    idxs[i] = name
+    
+for _ in range(m):
+    # 입력이 숫자인지 문자열인지 구분
+    ipt = input().rstrip()
+    try:
+        ipt = int(ipt)
+        print(idxs[ipt])
+    except:
+        print(names[ipt])
