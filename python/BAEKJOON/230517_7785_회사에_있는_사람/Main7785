@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+answer = {}
+for _ in range(n):
+    name, log = input().split()
+    
+    if log == 'enter':
+        answer[name] = 0
+    else:
+        answer.pop(name)
+
+answer = sorted(answer.keys(), reverse = True)
+
+for a in answer:
+    print(a)
