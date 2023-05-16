@@ -1,0 +1,11 @@
+s = input()
+sList = []
+
+for i in range(len(s)):
+    for j in range(i, len(s) + 1):
+            tmp = s[i:j]
+            if tmp != '':
+                sList.append(tmp)
+
+answer = set(sList)
+print(len(answer))
