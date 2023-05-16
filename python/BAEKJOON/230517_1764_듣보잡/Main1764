@@ -1,0 +1,12 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+
+dontHear = set(input().rstrip() for _ in range(n))
+dontSee = set(input().rstrip() for _ in range(m))
+
+answer = sorted(dontHear & dontSee)
+print(len(answer))
+for a in answer:
+    print(a)
