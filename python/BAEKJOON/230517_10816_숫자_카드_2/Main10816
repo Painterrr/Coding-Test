@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+_ = int(input())
+N = list(map(int, input().split()))
+_ = int(input())
+M = list(map(int, input().split()))
+
+_dict = {}
+for n in N:
+    if n not in _dict:
+        _dict[n] = 1
+    else:
+        _dict[n] += 1
+        
+for m in M:
+    if m in _dict:
+        print(_dict[m], end = ' ')
+    else:
+        print(0, end = ' ')
