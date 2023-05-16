@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+members = {}
+
+for _ in range(n):
+    name, log = input().split()
+    
+    if log == 'enter':
+        members[name] = log
+    else:
+        members.pop(name)
+
+members = sorted(members.keys(), reverse = True)
+
+for i in members:
+    print(i)
