@@ -1,0 +1,22 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+
+unHear = set()
+unSee = set()
+
+for _ in range(n):
+    name = input().rstrip()
+    unHear.add(name)
+
+for _ in range(m):
+    name = input().rstrip()
+    unSee.add(name)
+    
+answer = (unHear & unSee)
+answer = sorted(list(answer))
+
+print(len(answer))
+for i in answer:
+    print(i)
