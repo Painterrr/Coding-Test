@@ -1,0 +1,25 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+for _ in range(n):
+    PS = input()
+    st = []
+    flag = True
+    
+    for ps in PS:
+        if ps == '(':
+            st.append(ps)
+        elif ps == ')':
+            if len(st) == 0:
+                print('NO')
+                flag = False
+                break
+            st.pop()
+    
+    if flag:
+        if len(st) == 0:
+            print('YES')
+        else:
+            print('NO')
