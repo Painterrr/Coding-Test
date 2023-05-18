@@ -1,0 +1,17 @@
+pos = list(input())
+st = []
+pieces = 0
+
+for i in range(len(pos)):
+    if pos[i] == '(':
+        st.append('(')
+    
+    else: # 레이저 위치 and 막대기 끝
+        if pos[i-1] == '(':
+            st.pop()
+            pieces += len(st)
+        else:
+            st.pop()
+            pieces += 1
+            
+print(pieces)
