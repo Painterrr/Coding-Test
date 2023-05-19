@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+A = list(map(int, input().split()))
+idx = []
+NGE = [-1] * n
+
+for i in range(n):
+    while idx and A[idx[-1]] < A[i]:
+        NGE[idx.pop()] = A[i]
+    
+    idx.append(i)
+    
+print(*NGE)
