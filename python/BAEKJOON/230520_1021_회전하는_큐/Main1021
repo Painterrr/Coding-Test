@@ -1,0 +1,22 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+dq = deque([i for i in range(1, N + 1)])
+index = list(map(int, input().split()))
+answer = 0
+
+for idx in index:
+    while True:
+        if dq[0] == idx:
+            dq.popleft()
+            break
+        else:
+            if dq.index(idx) <= len(dq) // 2:
+                dq.rotate(-1)
+                answer += 1
+            else:
+                dq.rotate(1)
+                answer += 1
+print(answer)
