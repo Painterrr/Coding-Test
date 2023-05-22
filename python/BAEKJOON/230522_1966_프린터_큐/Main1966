@@ -1,0 +1,29 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+tc = int(input())
+answer = []
+
+for _ in range(tc):
+    n, i = map(int, input().split())
+    docs = deque(list(map(int, input().split())))
+    cnt = 0
+
+    while True:
+        maxValue = max(docs)
+        front = docs.popleft()
+        i -= 1
+        
+        if front == maxValue:
+            cnt += 1
+            if i == -1:
+                answer.append(cnt)
+                break
+        else:
+            docs.append(front)
+            if i == -1:
+                i = len(docs) - 1
+
+for a in answer:
+    print(a)
