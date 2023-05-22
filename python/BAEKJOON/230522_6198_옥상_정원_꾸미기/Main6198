@@ -1,0 +1,17 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+H = [int(input()) for _ in range(n)]
+H.append(sys.maxsize)
+stack = []
+answer = [0] * n
+
+for i in range(n + 1):
+    while stack and H[stack[-1]] <= H[i]:
+        answer[stack[-1]] = i - stack[-1] - 1
+        stack.pop()
+
+    stack.append(i)
+
+print(sum(answer))
