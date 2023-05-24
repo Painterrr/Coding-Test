@@ -1,0 +1,18 @@
+def solution(players, callings):
+    player = {player : i for i, player in enumerate(players)}
+    rank = {i : player for i, player in enumerate(players)}
+    answer = []
+    
+    for rearName in callings:
+        rearRank = player[rearName]
+        frontRank = rearRank - 1
+        frontName = rank[frontRank]
+
+        player[frontName] = rearRank
+        player[rearName] = frontRank
+        rank[frontRank] = rearName
+        rank[rearRank] = frontName
+        
+    answer = list(rank.values())
+    
+    return answer
