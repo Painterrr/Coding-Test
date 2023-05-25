@@ -1,0 +1,29 @@
+def union (arr, a, b):
+    a = find(arr, a)
+    b = find(arr, b)
+    if a <= b:
+        arr[b] = a
+    else:
+        arr[a] = b
+
+def find(arr, n):
+    if arr[n] != n:
+        arr[n] = find(arr, arr[n])
+    return arr[n]
+
+def solution(n, computers):
+    arr = [i for i in range(n + 1)]
+    
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                continue
+            if computers[i][j] == 1:
+                union(arr, i + 1, j + 1)
+
+    group = set()
+    for i in range(1, len(arr)):
+        v = find(arr, arr[i])
+        group.add(v)
+
+    return len(group)
