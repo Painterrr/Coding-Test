@@ -1,0 +1,11 @@
+def solution(routes):
+    answer = 0
+    routes.sort(key = lambda x : x[1])
+    
+    point = -30001
+    for route in routes:
+        if point < route[0]:
+            point = route[1]
+            answer += 1
+        
+    return answer
