@@ -1,0 +1,17 @@
+def solution(numbers, target):
+    answer = 0
+    n = len(numbers)
+    
+    def dfs(depth, now):
+        if depth == n:
+            if now == target:
+                nonlocal answer
+                answer += 1
+            return
+        
+        dfs(depth + 1, now + numbers[depth])
+        dfs(depth + 1, now - numbers[depth])
+    
+    dfs(0, 0)
+    
+    return answer
