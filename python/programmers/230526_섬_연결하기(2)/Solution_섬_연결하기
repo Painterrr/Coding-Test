@@ -1,0 +1,15 @@
+def solution(n, costs):
+    answer = 0
+    costs.sort(key = lambda x : x[2])
+    group = set([costs[0][0]])
+    
+    while len(group) < n:
+        for cost in costs:
+            if cost[0] in group and cost[1] in group:
+                continue
+            if cost[0] in group or cost[1] in group:
+                group.update([cost[0], cost[1]])
+                answer += cost[2]
+                break
+
+    return answer
