@@ -1,0 +1,22 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+M = int(input())
+costs = [list(map(int, input().split())) for i in range(M)]
+price = 0
+
+costs.sort(key = lambda x : x[2])
+link = set()
+link.add(costs[0][0])
+
+while len(link) < N:
+    for cost in costs:
+        if cost[0] in link and cost[1] in link:
+            continue
+        if cost[0] in link or cost[1] in link:
+            link.update([cost[0], cost[1]])
+            price += cost[2]
+            break
+
+print(price)
