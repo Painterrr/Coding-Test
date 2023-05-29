@@ -1,0 +1,31 @@
+import sys
+sys.setrecursionlimit(1000000)
+input = sys.stdin.readline
+
+N = int(input())
+matrix = [list(map(int, input().split())) for _ in range(N)]
+highest = max(max(matrix))
+safeZone = [0] * highest
+
+def dfs(X, Y, high):
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    
+    for i in range(4):
+        x = X + dx[i]
+        y = Y + dy[i]
+        
+        if (0 <= x < N) and (0 <= y < N) and not visited[x][y] and matrix[x][y] > high:
+            visited[x][y] = True
+            dfs(x, y, high)
+
+for i in range(highest):
+    visited = [[False] * N for _ in range(N)]
+    for j in range(N):
+        for k in range(N):
+            if not visited[j][k] and matrix[j][k] > i:
+                visited[j][k] = True
+                dfs(j, k, i)
+                safeZone[i] += 1
+
+print(max(safeZone)) 
