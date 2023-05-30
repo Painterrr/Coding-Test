@@ -1,0 +1,38 @@
+import sys
+sys.setrecursionlimit(100000)
+input = sys.stdin.readline
+
+def dfs(X, Y):
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    visited[X][Y] = True
+    
+    for i in range(4):
+        x = X + dx[i]
+        y = Y + dy[i]
+        
+        if (0 <= x < N) and (0 <= y < M):
+            if not visited[x][y] and matrix[x][y] == 1:
+                dfs(x, y)
+
+tc = int(input())
+answer = []
+for _ in range(tc):
+    M, N, K = map(int, input().split())
+    cnt = 0
+    matrix = [[0] * M for _ in range(N)]
+    visited = [[False] * M for _ in range(N)]
+
+    for _ in range(K):
+        m, n = map(int, input().split())
+        matrix[n][m] = 1
+
+    for i in range(N):
+        for j in range(M):
+            if matrix[i][j] == 1 and not visited[i][j]:
+                dfs(i, j)
+                cnt += 1
+    answer.append(cnt)
+
+for a in answer:
+    print(a)
