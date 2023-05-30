@@ -1,0 +1,15 @@
+import sys
+sys.setrecursionlimit(1000000)
+input = sys.stdin.readline
+
+N = int(input())
+matrix = [list(map(int, input().split())) for _ in range(N)]
+
+for i in range(N):
+    for j in range(N):
+        for k in range(N):
+            if matrix[j][i] == matrix[i][k] == 1:
+                matrix[j][k] = 1
+
+for row in matrix:
+    print(*row)
