@@ -1,0 +1,33 @@
+import sys
+sys.setrecursionlimit(1000000)
+
+N = int(input())
+matrix = [list(map(int, input().split())) for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+maxHigh = max(max(matrix))
+answer = 0
+
+def dfs(X, Y):
+    visited[X][Y] = True
+    global rain
+
+    for i in range(4):
+        x = X + dx[i]
+        y = Y + dy[i]
+        
+        if (0 <= x < N) and (0 <= y < N):
+            if not visited[x][y] and matrix[x][y] > rain:
+                dfs(x, y)
+
+for rain in range(maxHigh):
+    visited = [[False] * N for _ in range(N)]
+    cnt = 0
+    for i in range(N):
+        for j in range(N):
+            if not visited[i][j] and matrix[i][j] > rain:
+                dfs(i, j)
+                cnt += 1
+    answer = max(answer, cnt)
+
+print(answer)
