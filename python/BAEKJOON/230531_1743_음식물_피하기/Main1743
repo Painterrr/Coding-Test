@@ -1,0 +1,37 @@
+import sys
+sys.setrecursionlimit(1000000)
+
+N, M, K = map(int, input().split())
+matrix = [[0] * M for _ in range(N)]
+visited = [[False] * M for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+answer = 0
+
+for _ in range(K):
+    r, c = map(int, input().split())
+    r -= 1
+    c -= 1
+    matrix[r][c] = 1
+    
+def dfs(X, Y):
+    global depth
+    depth += 1
+    visited[X][Y] = True
+    
+    for i in range(4):
+        x = X + dx[i]
+        y = Y + dy[i]
+        
+        if (0 <= x < N) and (0 <= y < M):
+            if not visited[x][y] and matrix[x][y]:
+                dfs(x, y)
+
+for i in range(N):
+    for j in range(M):
+        if not visited[i][j] and matrix[i][j]:
+            depth = 0
+            dfs(i, j)
+            answer = max(answer, depth)
+
+print(answer)
