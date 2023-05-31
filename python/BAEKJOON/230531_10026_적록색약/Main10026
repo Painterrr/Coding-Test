@@ -1,0 +1,66 @@
+import sys
+sys.setrecursionlimit(10 ** 6)
+input = sys.stdin.readline
+
+N = int(input())
+matrix = [list(input().rstrip()) for _ in range(N)]
+matrix2 = [[''] * N for _ in range(N)]
+visited = [[False] * N for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+for i in range(N):
+    for j in range(N):
+        if matrix[i][j] == 'G':
+            matrix2[i][j] = 'R'
+        else:
+            matrix2[i][j] = matrix[i][j]
+# print('------------------------')
+# for i in range(N):
+#     for j in range(N):
+#         print(matrix[i][j], end='')
+#     print()
+# print('------------------------')
+# for i in range(N):
+#     for j in range(N):
+#         print(matrix2[i][j], end='')
+#     print()
+
+def dfs(X, Y):
+    visited[X][Y] = True
+    
+    for i in range(4):
+        x = X + dx[i]
+        y = Y + dy[i]
+        
+        if (0 <= x < N) and (0 <= y < N):
+            if not visited[x][y] and matrix[x][y] == matrix[X][Y]:
+                dfs(x, y)
+
+def dfs2(X, Y):
+    visited[X][Y] = True
+    
+    for i in range(4):
+        x = X + dx[i]
+        y = Y + dy[i]
+        
+        if (0 <= x < N) and (0 <= y < N):
+            if not visited[x][y] and matrix2[x][y] == matrix2[X][Y]:
+                dfs2(x, y)
+
+tell = 0
+for i in range(N):
+    for j in range(N):
+        if not visited[i][j]:
+            dfs(i, j)
+            tell += 1
+            
+notTell = 0
+visited = [[False] * N for _ in range(N)]
+for i in range(N):
+    for j in range(N):
+        if not visited[i][j]:
+            dfs2(i, j)
+            notTell += 1
+
+print(tell, notTell)
