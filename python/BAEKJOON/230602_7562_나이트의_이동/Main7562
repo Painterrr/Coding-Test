@@ -1,0 +1,36 @@
+from collections import deque
+
+tc = int(input())
+answer = [] * tc
+for _ in range(tc):
+    l = int(input())
+    matrix = [[0] * l for _ in range(l)]
+    startX, startY = map(int, input().split())
+    endX, endY = map(int, input().split())
+    
+    def bfs(X, Y):
+        dq = deque()
+        dq.append((X, Y))
+        dx = [-2, -1, 1, 2, 2, 1, -1, -2]
+        dy = [-1, -2, -2, -1, 1, 2, 2, 1]
+        
+        while dq:
+            nowX, nowY = dq.popleft()
+            
+            if nowX == endX and nowY == endY:
+                answer.append(matrix[nowX][nowY])
+                break
+            
+            for i in range(8):
+                x = nowX + dx[i]
+                y = nowY + dy[i]
+                
+                if (0 <= x < l) and (0 <= y < l):
+                    if matrix[x][y] == 0:
+                        dq.append((x, y))
+                        matrix[x][y] = matrix[nowX][nowY] + 1
+    
+    bfs(startX, startY)
+
+for a in answer:
+    print(a)
