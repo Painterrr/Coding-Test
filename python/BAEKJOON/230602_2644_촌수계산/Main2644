@@ -1,0 +1,36 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+x, y = map(int, input().split())
+m = int(input())
+nodes = [[] for _ in range(n + 1)]
+visited = [False] * (n + 1)
+answer = -1
+
+for _ in range(m):
+    a, b = map(int, input().split())
+    nodes[a].append(b)
+    nodes[b].append(a)
+
+def bfs(start):
+    global answer
+    dq = deque([(x, 0)])
+    visited[start] = True
+    
+    while dq:
+        now, cnt = dq.popleft()
+        
+        if now == y:
+            answer = cnt
+            return
+        
+        for son in nodes[now]:
+            if not visited[son]:
+                visited[son] = True
+                dq.append([son, cnt + 1])
+
+bfs(x)
+
+print(answer)
