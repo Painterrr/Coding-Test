@@ -1,0 +1,28 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+matrix = [list(map(int, input().rstrip())) for _ in range(N)]
+
+def bfs(startX, startY):
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    dq = deque()
+    dq.append((startX, startY))
+    
+    while dq:
+        x, y = dq.popleft()
+        if x == (N - 1) and y == (M - 1):
+            print(matrix[x][y])
+            return
+        
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if (0 <= nx < N) and (0 <= ny < M):
+                if matrix[nx][ny] == 1:
+                    dq.append((nx, ny))
+                    matrix[nx][ny] = matrix[x][y] + 1
+
+bfs(0, 0)
