@@ -1,0 +1,21 @@
+from collections import deque
+
+N, K = map(int, input().split())
+A = [0] * (100001)
+
+def bfs(startIdx):
+    dq = deque()
+    dq.append(startIdx)
+    
+    while dq:
+        nowIdx = dq.popleft()
+        
+        if nowIdx == K:
+            print(A[nowIdx])
+            break
+        
+        for nextIdx in (nowIdx - 1, nowIdx + 1, nowIdx * 2):      
+            if (0 <= nextIdx <= 100000) and A[nextIdx] == 0:
+                dq.append(nextIdx)
+                A[nextIdx] = A[nowIdx] + 1
+bfs(N)
