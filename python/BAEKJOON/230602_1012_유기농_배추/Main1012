@@ -1,0 +1,46 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+answer = []
+
+T = int(input())
+for _ in range(T):
+    M, N, K = map(int, input().split())
+    matrix = [[0] * M for _ in range(N)]
+    visited = [[False] * M for _ in range(N)]
+    cnt = 0
+    
+    for _ in range(K):
+        b, a = map(int, input().split())
+        matrix[a][b] = 1
+    
+    def bfs(X, Y):
+        dq = deque()
+        dq.append((X, Y))
+        visited[X][Y] = True
+        
+        while dq:
+            nowX, nowY = dq.popleft()
+            
+            for i in range(4):
+                x = nowX + dx[i]
+                y = nowY + dy[i]
+                
+                if (0 <= x < N) and (0 <= y < M):
+                    if not visited[x][y] and matrix[x][y] == 1:
+                        dq.append((x, y))
+                        visited[x][y] = True
+
+    for i in range(N):
+        for j in range(M):
+            if not visited[i][j] and matrix[i][j] == 1:
+                bfs(i, j)
+                cnt += 1
+    
+    answer.append(cnt)
+
+for a in answer:
+    print(a)
