@@ -1,0 +1,38 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+tc = int(input())
+for _ in range(tc):
+    present, target = map(int, input().split())
+    visited = set()
+    visited.add(present)
+    dq = deque()
+    dq.append([present, ""])
+    
+    while dq:
+        num, path = dq.popleft()
+        
+        if num == target:
+            print(path)
+            break
+        
+        D = (num * 2) % 10000
+        if D not in visited:
+            visited.add(D)
+            dq.append([D, path + 'D'])
+        
+        S = (num - 1) % 10000
+        if S not in visited:
+            visited.add(S)
+            dq.append([S, path + 'S'])
+    
+        L = num // 1000 + (num % 1000) * 10
+        if L not in visited:
+            visited.add(L)
+            dq.append([L, path + 'L'])
+        
+        R = num // 10 + (num % 10) * 1000
+        if R not in visited:
+            visited.add(R)
+            dq.append([R, path + 'R'])
