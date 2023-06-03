@@ -1,0 +1,17 @@
+N = int(input())
+
+answer = []
+record = {}
+for i in range(N):
+    name, status = input().split()
+    if status == 'enter':
+        record[name] = 1
+    elif status == 'leave':
+        record.pop(name)
+
+for r in record:
+    answer.append(r)
+
+answer.sort(reverse = True)
+for a in answer:
+    print(a)
