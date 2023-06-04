@@ -1,0 +1,15 @@
+N, C = map(int, input().split())
+arr = list(map(int, input().split()))
+numCnt = {}
+
+for a in arr:
+    if a in numCnt:
+        numCnt[a] += 1
+    else:
+        numCnt[a] = 1
+
+numCnt = sorted(numCnt.items(), key = lambda x : x[1], reverse = True)
+
+for a, b in numCnt:
+    for j in range(b):
+        print(str(a), end = " ")
