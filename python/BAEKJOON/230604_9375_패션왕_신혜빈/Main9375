@@ -1,0 +1,20 @@
+answer = []
+tc = int(input())
+for _ in range(tc):
+    n = int(input())
+    wears = {}
+    for _ in range(n):
+        item, category = input().split()
+        if category in wears:
+            wears[category].append(item)
+        else:
+            wears[category] = [item]
+    
+    cnt = 1
+    for key in wears:
+        cnt *= len(wears[key]) + 1
+    
+    answer.append(cnt - 1)
+
+for a in answer:
+    print(a)
