@@ -1,0 +1,43 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+poss = []
+highs = []
+maxPos = 0
+for _ in range(N):
+    pos, high = map(int, input().split())
+    maxPos = max(maxPos, pos)
+    poss.append(pos)
+    highs.append(high)
+
+matrix = [0] * (maxPos + 1)
+for i in range(maxPos + 1):
+    if i in poss:
+        idx = poss.index(i)
+        matrix[i] = highs[idx]
+
+front = []
+back = [0] * (maxPos + 1)
+
+now = 0
+for i in range(maxPos + 1):
+    if front and front[-1] < matrix[i]:
+        now = matrix[i]
+        front.append(now)
+        continue
+    front.append(now)
+
+now = matrix[-1]
+for i in range(maxPos, -1, -1):
+    if back and now < matrix[i]:
+        now = matrix[i]
+        back[i] = now
+        continue
+    back[i] = now
+
+answer = []
+for i in range(maxPos + 1):
+    answer.append(min(front[i], back[i]))
+
+print(sum(answer))
