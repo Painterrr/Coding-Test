@@ -1,0 +1,41 @@
+N = int(input())
+poss = []
+highs = []
+
+maxPos = 0
+for _ in range(N):
+    pos, high = map(int, input().split())
+    maxPos = max(maxPos, pos)
+    poss.append(pos)
+    highs.append(high)
+
+arr = [0] * (maxPos + 1)
+for i in range(maxPos + 1):
+    if i in poss:
+        idx = poss.index(i)
+        arr[i] = highs[idx]
+
+front = [0] * (maxPos + 1)
+back = [0] * (maxPos + 1)
+
+now = 0
+for i in range(maxPos + 1):
+    if i != 0 and front[i - 1] < arr[i]:
+        now = arr[i]
+        front[i] = now
+        continue
+    front[i] = now
+
+now = arr[maxPos]
+for i in range(maxPos, 0, -1):
+    if i != maxPos and back[i + 1] < arr[i]:
+        now = arr[i]
+        back[i] = now
+        continue
+    back[i] = now
+
+answer = []
+for i in range(maxPos + 1):
+    answer.append(min(front[i], back[i]))
+
+print(sum(answer))
