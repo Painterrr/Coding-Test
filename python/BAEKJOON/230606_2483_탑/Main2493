@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+tops = list(map(int, input().split()))
+idx = []
+answer = [0] * N
+
+for i in range(N):
+    while idx:
+        if tops[idx[-1]] < tops[i]:
+            idx.pop()
+        else:
+           answer[i] = idx[-1] + 1
+           break
+    
+    idx.append(i)
+print(*answer)
