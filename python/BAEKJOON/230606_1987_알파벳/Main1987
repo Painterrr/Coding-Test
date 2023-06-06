@@ -1,0 +1,27 @@
+from collections import deque
+
+R, C = map(int, input().split())
+matrix = [list(map(str, input())) for _ in range(R)]
+visited = [[False] * C] * R
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+def bfs():
+    global maxDepth
+    que = set([(0, 0, matrix[0][0])])
+    
+    while que:
+        X, Y, word = que.pop()
+        maxDepth = max(maxDepth, len(word))
+        
+        for i in range(4):
+            x = X + dx[i]
+            y = Y + dy[i]
+            
+            if (0 <= x < R) and (0 <= y < C):
+                if matrix[x][y] not in word:
+                    que.add((x, y, word + matrix[x][y]))
+
+maxDepth = 1
+bfs()
+print(maxDepth)
