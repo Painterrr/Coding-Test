@@ -1,0 +1,34 @@
+def solution(park, routes):
+    x, y = 0, 0
+    for i in range(len(park)):
+        for j in range(len(park[i])):
+            if park[i][j] == 'S':
+                x, y = i, j
+                
+    R = len(park)
+    C = len(park[0])
+    
+    op = {'N':(-1, 0), 'S':(1, 0), 'W':(0, -1), 'E':(0, 1)}
+    
+    for r in routes:
+        dx, dy = op[r.split()[0]]
+        n = int(r.split()[1])
+        
+        X, Y = x, y
+        canMove = True
+        
+        for _ in range(n):
+            nx = X + dx
+            ny = Y + dy
+            
+            if (0 <= nx < R) and (0 <= ny < C) and park[nx][ny] != 'X':
+                canMove = True
+                X, Y = nx, ny
+            else:
+                canMove = False
+                break
+                
+        if canMove:
+            x, y = nx, ny  
+        
+    return [x, y]
