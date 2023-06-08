@@ -1,0 +1,14 @@
+def solution(name, yearning, photo):
+    answer = []
+    missYou = {}
+    
+    for i in range(len(name)):
+        missYou[name[i]] = yearning[i]
+    
+    for p in photo:
+        point = 0
+        for n in p:
+            if n in missYou:
+                point += missYou[n]
+        answer.append(point)
+    return answer
