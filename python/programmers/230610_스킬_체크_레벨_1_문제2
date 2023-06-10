@@ -1,0 +1,23 @@
+def solution(babbling):
+    answer = 0
+    # aya, ye, woo, ma
+    # 연속된 같은 발음 불가
+    words = ['aya', 'ye', 'woo', 'ma']
+    repeats = ['ayaaya', 'yeye', 'woowoo', 'mama']
+
+    for bab in babbling:
+        for invalid in repeats:
+            bab = bab.replace(invalid, 'X')
+        for valid in words:
+            bab = bab.replace(valid, 'O')
+
+        isValid = True
+        for c in bab:
+            if c != 'O':
+                isValid = False
+                break
+
+        if isValid:
+            answer += 1
+
+    return answer
