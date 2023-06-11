@@ -1,0 +1,22 @@
+def solution(wallpaper):
+    answer = []
+    xList = []
+    yList = []
+    r = len(wallpaper)
+    c = len(wallpaper[0])
+    
+    for i in range(r):
+        for j in range(c):
+            if wallpaper[i][j] == '#':
+                xList.append(i)
+                yList.append(j)
+
+    xList.sort()
+    yList.sort()
+    
+    answer.append(xList[0])
+    answer.append(yList[0])
+    answer.append(xList[len(xList) - 1] + 1)
+    answer.append(yList[len(yList) - 1] + 1)
+
+    return answer
