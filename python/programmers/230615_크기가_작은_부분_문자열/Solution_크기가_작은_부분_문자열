@@ -1,0 +1,11 @@
+def solution(t, p):
+    answer = 0
+    pL = len(p)
+    tL = len(t)
+    
+    for i in range(tL - pL + 1):
+        num = int(t[i:i + pL])
+        if num <= int(p):
+            answer += 1
+    
+    return answer
