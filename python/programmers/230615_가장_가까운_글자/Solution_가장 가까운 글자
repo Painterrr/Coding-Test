@@ -1,0 +1,14 @@
+def solution(s):
+    answer = []
+    words = {}
+    
+    for i in range(len(s)):
+        char = s[i]
+        if char not in words:
+            words[char] = i
+            answer.append(-1)
+        else:
+            answer.append(i - words[char])
+            words[char] = i
+        
+    return answer
