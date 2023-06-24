@@ -1,0 +1,19 @@
+def solution(k, tangerine):
+    answer = 0
+    gul = {}
+    
+    for n in tangerine:
+        if n in gul:
+            gul[n] += 1
+        else:
+            gul[n] = 1
+    
+    gul = dict(sorted(gul.items(), key = lambda x: x[1], reverse = True))
+
+    for n in gul:
+        if k <= 0:
+            return answer
+        k -= gul[n]
+        answer += 1
+    
+    return answer
