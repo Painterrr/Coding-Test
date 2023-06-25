@@ -1,0 +1,19 @@
+def solution(s):
+    answer = 0
+    pair = {'{':'}', '[':']', '(':')'}
+    l = len(s)
+    
+    for i in range(l):
+        iscorrect, stack = True, []
+        for v in s:
+            if v in ['{', '[', '(']:
+                stack.append(v)
+            elif not stack or v != pair[stack[-1]]:
+                iscorrect = False
+            else:
+                stack.pop()
+        
+        answer += int(iscorrect and not stack)
+        s = s[1:] + s[0]
+        
+    return answer
