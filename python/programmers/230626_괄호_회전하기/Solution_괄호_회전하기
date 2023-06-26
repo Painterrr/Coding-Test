@@ -1,0 +1,20 @@
+def solution(s):
+    answer = 0
+    pair = {'{':'}', '(':')', '[':']'}
+    l = len(s)
+    
+    for _ in range(l):
+        isPair = True
+        stack = []
+        for v in s:
+            if v in ['{', '[', '(']:
+                stack.append(v)
+            elif not stack or v != pair[stack[-1]]:
+                isPair = False
+            else:
+                stack.pop()
+    
+        answer += int(not stack and isPair)
+        s = s[1:] + s[0]
+        
+    return answer
