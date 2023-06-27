@@ -1,0 +1,12 @@
+def solution(elements):
+    n = len(elements)
+    dp = elements
+    elements = elements + elements
+    answer = set(dp)
+    
+    for i in range(2, n):
+        for j in range(n):
+            dp[j] = dp[j] + elements[j + i - 1]
+            answer.add(dp[j])
+    
+    return len(answer) + 1
