@@ -1,0 +1,35 @@
+import math
+
+def solution(str1, str2):
+    answer = 0
+    s1 = makeChar(str1)
+    s2 = makeChar(str2)
+    
+    print(s1)
+    print(s2)
+    
+    if s1 == [] and s2 == []:
+        return 65536
+    
+    s1Copy = s1[:]
+    s2Copy = s2[:]
+    
+    inter = []
+    for v in s1:
+        if v in s2Copy:
+            inter.append(v)
+            s1Copy.remove(v)
+            s2Copy.remove(v)
+    
+    union = inter + s1Copy + s2Copy
+    answer = math.floor((len(inter)/len(union)) * 65536)    
+    return answer
+
+def makeChar(s):
+    l = len(s)
+    s = s.lower()
+    arr = []
+    for i in range(l - 1):
+        if s[i:i + 2].isalpha():
+            arr.append(s[i:i + 2])
+    return arr
