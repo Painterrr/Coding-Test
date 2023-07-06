@@ -1,0 +1,27 @@
+def solution(n, k):
+    answer = 0
+    num = ''
+    
+    while n:
+        num = str(n % k) + num
+        n = n // k
+    
+    num = num.split('0')
+    
+    for n in num:
+        if len(n) == 0:
+            continue
+        if int(n) < 2:
+            continue
+        if isPrime(int(n)):
+            answer += 1
+    
+    return answer
+
+def isPrime(n):
+    if n == 1:
+        return False
+    for i in range(2, int(int(n) ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
