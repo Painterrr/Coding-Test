@@ -1,0 +1,19 @@
+def solution(msg):
+    answer = []
+    words = {chr(65 + i) : i + 1 for i in range(26)}
+    
+    w = c = 0
+    while True:
+        c += 1
+        if c == len(msg):
+            answer.append((words[msg[w:c]]))
+            break
+        
+        # w + c가 사전에 없다면
+        if msg[w:c + 1] not in words:
+            words[msg[w:c + 1]] = len(words) + 1
+            answer.append(words[msg[w:c]])
+            w = c
+        
+        # w + c가 사전에 있으면: w값은 변하지 않고 c의 값만 1씩 증가
+    return answer
