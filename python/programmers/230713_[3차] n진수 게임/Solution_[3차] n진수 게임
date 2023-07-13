@@ -1,0 +1,21 @@
+def solution(n, t, m, p):
+    answer = ''
+    tmp = ''
+    
+    for i in range(m * t):
+        tmp += str(convert(i, n))
+        
+    while len(answer) < t:
+        answer += tmp[p-1]
+        p += m
+    
+    return answer
+
+def convert(num, base):
+    nums = '0123456789ABCDEF'
+    q, r = divmod(num, base)
+    
+    if q == 0:
+        return nums[r]
+    else:
+        return convert(q, base) + nums[r]
