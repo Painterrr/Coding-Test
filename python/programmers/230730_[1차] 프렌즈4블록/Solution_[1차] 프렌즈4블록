@@ -1,0 +1,141 @@
+# m = 4
+# n = 5
+# board = ["CCBDE", "AAADE", "AAABF", "CCBBF"]
+# # answer: 14
+
+# m = 6
+# n = 6
+# board = ["TTTANT", "RRFACC", "RRRFCC", "TRRRAA", "TTMMMF", "TMMTTJ"]
+# # answer: 15
+
+# m = 7
+# n = 2
+# board = ["AA", "BB", "AA", "BB", "ZZ", "ZZ", "CC"]
+# # 4
+
+m = 10
+n = 10
+board = ["DDABBAABBA",
+        "AAAAAABBBA",
+        "DDACCBBBAA",
+        "DDABBBBBAA",
+        "AAABBABBBA",
+        "CCADDAABBB",
+        "CCADDAABBB",
+        "BBACCABBBA",
+        "BBAAABBBAA",
+        "DDABBBBAAA"]
+# 86
+
+# m = 2
+# n = 2
+# board = ["aa", "aa"]
+# # 0
+
+# m = 2
+# n = 3
+# board = ["AAA", "AAA"]
+# # 6
+
+
+def solution(m, n, board):
+    answer = 0
+    matrix = [list(board[i]) for i in range(m)]
+    # matrix = [[""] * n for _ in range(m)]
+    # for i in range(m):
+    #     for j in range(n):
+    #         matrix[i][j] = board[i][j]
+
+    squareX = [0, 1, 1]
+    squareY = [1, 0, 1]
+
+    def checkMatrix(matrix, check):
+        for i in range(m):
+            for j in range(n):
+                block = matrix[i][j]
+                if 65 > ord(block) or ord(block) > 90:
+                    break
+                isSquare = True
+                for k in range(3):
+                    x = i + squareX[k]
+                    y = j + squareY[k]
+                    if 0 > x or x >= m or 0 > y or y >= n:
+                        isSquare = False
+                        break
+                    if block != matrix[x][y]:
+                        isSquare = False
+                        break
+                if isSquare:
+                    check[i][j] = 1
+                    for k in range(3):
+                        x = i + squareX[k]
+                        y = j + squareY[k]
+                        check[x][y] = 1
+
+    def deleteSquare(matrix, check):
+        nonlocal cnt
+        for i in range(m):
+            for j in range(n):
+                if check[i][j] == 1:
+                    cnt += 1
+                    matrix[i][j] = "-"
+
+    def arrangeMatrix(matrix):
+        for j in range(n):
+            q = []
+            for i in range(m - 1, -1, -1):
+                q.append(matrix[i][j])
+            space = 0
+            for i in range(m):
+                now = q.pop(0)
+                if now == "-":
+                    space += 1
+                else:
+                    q.append(now)
+            for i in range(space):
+                q.append("-")
+            for i in range(m):
+                matrix[i][j] = q.pop()
+
+    while True:
+        check = [[0] * n for i in range(m)]
+        cnt = 0
+
+        checkMatrix(matrix, check)
+
+        print("after checkMatrix------------------------")
+        for i in range(m):
+            for j in range(n):
+                print(matrix[i][j], end="")
+            print()
+            
+        print("check")
+        for i in range(m):
+            for j in range(n):
+                print(check[i][j], end="")
+            print()
+
+        deleteSquare(matrix, check)
+        if cnt == 0:
+            break
+        else:
+            answer += cnt
+
+        print("after deleteSquare")
+        for i in range(m):
+            for j in range(n):
+                print(matrix[i][j], end="")
+            print()
+
+        arrangeMatrix(matrix)
+
+        print("after arrangeMatrix")
+        for i in range(m):
+            for j in range(n):
+                print(matrix[i][j], end="")
+            print()
+
+    print(answer)
+    return answer
+
+solution(m, n, board)
