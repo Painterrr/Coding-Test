@@ -1,0 +1,18 @@
+from collections import deque
+
+def solution(numbers, target):
+    answer = 0
+    dq = deque([(0, 0)])
+    
+    while dq:
+        v, idx = dq.popleft()
+        
+        if idx > len(numbers):
+            break
+        elif v == target and idx == len(numbers):
+                answer += 1
+                
+        dq.append((v + numbers[idx - 1], idx + 1))
+        dq.append((v - numbers[idx - 1], idx + 1))
+    
+    return answer
