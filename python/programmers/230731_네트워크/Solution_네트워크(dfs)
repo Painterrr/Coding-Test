@@ -1,0 +1,21 @@
+import sys
+sys.setrecursionlimit(10 ** 6)
+
+def solution(n, computers):
+    answer = 0
+    visited = [False for _ in range(n)]
+    
+    def dfs(i):
+        if visited[i]:
+            return
+        visited[i] = True
+        for now in range(n):
+            if i != now and computers[i][now] == 1:
+                dfs(now)
+        
+    for i in range(n):
+        if not visited[i]:
+            dfs(i)
+            answer += 1
+    
+    return answer
