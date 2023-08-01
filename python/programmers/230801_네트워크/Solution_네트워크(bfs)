@@ -1,0 +1,23 @@
+from collections import deque
+
+def solution(n, computers):
+    answer = 0
+    visited = [False for _ in range(n)]
+    
+    def bfs(idx):
+        dq = deque([idx])
+
+        while dq:
+            now = dq.popleft()
+            visited[now] = True
+
+            for i in range(n):
+                if computers[now][i] == 1 and not visited[i]:
+                    dq.append(i)
+    
+    for i in range(n):
+        if not visited[i]:
+            bfs(i)
+            answer += 1
+    
+    return answer
