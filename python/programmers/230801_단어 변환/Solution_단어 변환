@@ -1,0 +1,29 @@
+from collections import deque
+
+def solution(begin, target, words):
+    answer = 0
+    if target not in words:
+        return answer
+    n = len(words)
+    wordLen = len(begin)
+    visited = [False] * n
+    dq = deque([(begin, 0)])
+    
+    while dq:
+        now, cnt = dq.popleft()
+        if now == target:
+            answer = cnt
+            break
+        
+        for i in range(n):
+            differ = 0
+            if not visited[i]:
+                for j in range(wordLen):
+                    if now[j] != words[i][j]:
+                        differ += 1
+
+                if differ == 1:
+                    visited[i] = True
+                    dq.append((words[i], cnt + 1))
+    
+    return answer
