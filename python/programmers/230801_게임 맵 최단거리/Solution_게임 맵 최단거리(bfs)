@@ -1,0 +1,37 @@
+from collections import deque
+
+def solution(maps):
+    answer = 0
+    n = len(maps)
+    m = len(maps[0])
+    visited = [[False] * m for _ in range(n)]
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    
+    def bfs(x, y, dis):
+        dq = deque([(x, y, dis)])
+        visited[x][y] = True
+        
+        while dq:
+            nowX, nowY, dis = dq.popleft()
+            
+            if nowX == n - 1 and nowY == m - 1:
+                return dis
+            
+            for i in range(4):
+                nx = nowX + dx[i]
+                ny = nowY + dy[i]
+                
+                if 0 > nx or nx >= n or 0 > ny or ny >= m:
+                    continue
+                
+                if maps[nx][ny] == 1 and not visited[nx][ny]:
+                    visited[nx][ny] = True
+                    dq.append((nx, ny, dis + 1))
+    
+    answer = bfs(0, 0, 1)
+    
+    if not answer:
+        answer = -1
+    
+    return answer
