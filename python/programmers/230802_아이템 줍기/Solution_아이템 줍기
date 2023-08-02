@@ -1,0 +1,56 @@
+from collections import deque
+
+def solution(rectangle, characterX, characterY, itemX, itemY):
+    answer = 0
+    matrix = [[0] * 102 for _ in range(102)]
+    visited = [[0] * 102 for _ in range(102)]
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    
+    for square in rectangle:
+        x1, y1, x2, y2 = square
+        x1 = 2 * x1
+        y1 = 2 * y1
+        x2 = 2 * x2
+        y2 = 2 * y2
+        for x in range(x1, x2 + 1):
+            for y in range(y1, y2 + 1):
+                matrix[x][y] = 1
+
+    for square in rectangle:
+        x1, y1, x2, y2 = square
+        x1 = 2 * x1
+        y1 = 2 * y1
+        x2 = 2 * x2
+        y2 = 2 * y2
+        for x in range(x1 + 1, x2):
+            for y in range(y1 + 1, y2):
+                matrix[x][y] = 0
+    
+    def bfs(cX, cY, iX, iY):
+        dq = deque([(cX, cY, 1)])
+        visited[cX][cY] = 1
+        
+        while dq:
+            nowX, nowY, dis = dq.popleft()
+            
+            if nowX == iX and nowY == iY:
+                return dis // 2
+
+            for i in range(4):
+                x = nowX + dx[i]
+                y = nowY + dy[i]
+                
+                if matrix[x][y] == 1 and not visited[x][y]:
+                    visited[x][y] = 7
+                    dq.append((x, y, dis + 1))
+                
+        
+    cX = 2 * characterX
+    cY = 2 * characterY
+    iX = 2 * itemX
+    iY = 2 * itemY
+    
+    answer = bfs(cX, cY, iX, iY)
+
+    return answer
