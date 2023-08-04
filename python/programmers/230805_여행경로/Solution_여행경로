@@ -1,0 +1,20 @@
+def solution(tickets):
+    answer = []
+    n = len(tickets)
+    tickets.sort(key = lambda x : (x[0], x[1]))
+    visited = [False] * n
+    
+    def dfs(now, route):
+        if len(route) == n + 1:
+            answer.append(route)
+            return
+        for i in range(n):
+            start, dest = tickets[i]
+            if start == now and not visited[i]:
+                visited[i] = True
+                dfs(dest, route + [dest])
+                visited[i] = False
+        
+    dfs("ICN", ["ICN"])
+    
+    return answer[0]
