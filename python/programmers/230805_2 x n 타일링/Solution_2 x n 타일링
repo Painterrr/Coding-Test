@@ -1,0 +1,21 @@
+import sys
+sys.setrecursionlimit(10 ** 6)
+
+def solution(n):
+    answer = 0
+    cache = [-1 for _ in range(60001)]
+    
+    def dp(n):
+        if cache[n] != -1:
+            return cache[n]
+        if n == 0:
+            return 1
+        if n == 1:
+            return 1
+        cache[n] = (dp(n - 1) + dp(n - 2)) % 1000000007
+        
+        return cache[n]
+    
+    dp(n)
+
+    return cache[n]
