@@ -1,0 +1,14 @@
+def solution(sizes):
+    answer = 0
+    n = len(sizes)
+    maxX = 0
+    maxY = 0
+    
+    for i in range(n):
+        sizes[i].sort()
+        maxX = max(maxX, sizes[i][0])
+        maxY = max(maxY, sizes[i][1])
+                   
+    answer = maxX * maxY
+    
+    return answer
