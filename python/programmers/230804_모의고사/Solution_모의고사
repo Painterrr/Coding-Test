@@ -1,0 +1,34 @@
+def solution(answers):
+    answer = []
+    std1 = [1, 2, 3, 4, 5]
+    std2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    std3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    point1 = 0
+    point2 = 0
+    point3 = 0
+    n = len(answers)
+    
+    for i in range(n):
+        nowAnswer = answers[i]
+        std1Answer = std1[i % 5]
+        std2Answer = std2[i % 8]
+        std3Answer = std3[i % 10]
+        
+        if std1Answer == nowAnswer:
+            point1 += 1
+        if std2Answer == nowAnswer:
+            point2 += 1
+        if std3Answer == nowAnswer:
+            point3 += 1
+            
+    maxPoint = max(point1, point2)
+    maxPoint = max(maxPoint, point3)
+
+    if maxPoint == point1:
+        answer.append(1)
+    if maxPoint == point2:
+        answer.append(2)
+    if maxPoint == point3:
+        answer.append(3)
+    
+    return answer
