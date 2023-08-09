@@ -1,0 +1,37 @@
+import math
+
+def solution(fees, records):
+    answer = []
+    park = {}
+    howLong = {}
+    
+    def howMuch(time):
+        if time <= fees[0]:
+            return fees[1]
+        else:
+            return fees[1] + math.ceil((time - fees[0]) / fees[2]) * fees[3]
+        
+    for record in records:
+        time, num, cmd = record.split()
+        hour, min = time.split(':')
+        time = int(hour) * 60 + int(min)
+        
+        if cmd == 'IN':
+            park[num] = time
+        elif cmd == 'OUT':
+            try:
+                howLong[num] += time - park[num]
+            except:
+                howLong[num] = time - park[num]
+            finally:
+                del park[num]
+    
+    for num, time in park.items():
+        try:
+            howLong[num] += (23 * 60 + 59) - time
+        except:
+            howLong[num] = (23 * 60 + 59) - time
+    
+    answer = [howMuch(time      ) for num, time in sorted(list(howLong.items()), key = lambda x : x[0])]
+    
+    return answer
