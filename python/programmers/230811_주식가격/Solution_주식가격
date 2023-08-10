@@ -1,0 +1,17 @@
+def solution(prices):
+    idxs = []
+    l = len(prices)
+    answer = [-1] * l
+        
+    for i in range(l):
+        while idxs and prices[idxs[-1]] > prices[i]:
+            answer[idxs[-1]] = i - idxs[-1]
+            idxs.pop()
+        
+        idxs.append(i)
+    
+    while idxs:
+        answer[idxs[-1]] = l - 1 - idxs[-1]
+        idxs.pop()
+    
+    return answer
