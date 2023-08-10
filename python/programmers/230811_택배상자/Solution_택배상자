@@ -1,0 +1,37 @@
+from collections import deque
+
+def solution(order):
+    answer = 0
+    n = len(order)
+    tmp = [-1] * n
+    sub = deque([])
+    for i in range(n):
+        tmp[order[i] - 1] = i + 1
+    
+    boxs = deque(tmp)
+    
+    needIdx = 1
+    while boxs:
+        if needIdx == boxs[0]:
+            boxs.popleft()
+            needIdx += 1
+            answer += 1
+        else:
+            if sub and needIdx == sub[-1]:
+                sub.pop()
+                needIdx += 1
+                answer += 1
+            elif sub and needIdx != sub[-1]:
+                sub.append(boxs.popleft())
+            elif not sub:
+                sub.append(boxs.popleft())
+                
+    while sub:
+        if sub[-1] == needIdx:
+            sub.pop()
+            needIdx += 1
+            answer += 1
+        else:
+            break
+            
+    return answer
