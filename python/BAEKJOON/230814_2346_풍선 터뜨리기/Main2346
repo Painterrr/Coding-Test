@@ -1,0 +1,18 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+dq = deque(enumerate(map(int, input().split())))
+answer = []
+
+while dq:
+    idx, next = dq.popleft()
+    answer.append(idx + 1
+                  )
+    if next > 0:
+        dq.rotate(-(next - 1))
+    else:
+        dq.rotate(-next)
+        
+print(' '.join(map(str, answer)))
