@@ -1,0 +1,24 @@
+import sys
+input = sys.stdin.readline
+
+T = int(input())
+
+for _ in range(T):
+    ps = input().rstrip()
+    stack = []
+    isVPS = True
+
+    for p in ps:
+        if p == '(':
+            stack.append(p)
+        else:
+            try:
+                stack.pop()
+            except:
+                isVPS = False
+                break
+
+    if len(stack) == 0 and isVPS:
+        print('YES')
+    else:
+        print('NO')
