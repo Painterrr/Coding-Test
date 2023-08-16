@@ -1,0 +1,19 @@
+from collections import deque
+import sys
+
+input = sys.stdin.readline
+
+N = int(input())
+A = list(map(int, input().split()))
+B = [deque([i]) for i in input().split()]
+M = int(input())
+C = list(map(int, input().split()))
+answer = deque([])
+
+for i in range(N):
+    if A[i] == 0:
+        answer.appendleft(B[i].pop())
+
+for j in range(M):
+    answer.append(C[j])
+    print(answer.popleft(), end = ' ')
