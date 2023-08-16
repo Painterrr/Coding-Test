@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+studs = list(map(int, input().split()))
+stack = []
+target = 1
+
+for i in range(N):
+    stack.append(studs[i])
+    while stack and stack[-1] == target:
+        target += 1
+        stack.pop()
+    
+if stack:
+    print('Sad')
+else:
+    print('Nice')
