@@ -1,0 +1,23 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+M = int(input())
+mtrs = list(map(int, input().split()))
+mtrs.sort()
+answer = 0
+
+s = 0
+e = N - 1
+while s < e:
+    sum = mtrs[s] + mtrs[e]
+    if sum == M:
+        answer += 1
+        s += 1
+        e -= 1
+    elif sum < M:
+        s += 1
+    else:
+        e -= 1
+        
+print(answer)
