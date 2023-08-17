@@ -1,0 +1,18 @@
+N = int(input())
+answer = 1
+s = e = 1
+sum = 1
+
+while e < N:
+    if sum == N:
+        answer += 1
+        e += 1
+        sum += e
+    elif sum < N:
+        e += 1
+        sum += e
+    else:
+        sum -= s
+        s += 1
+
+print(answer)
