@@ -1,0 +1,32 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+nums = list(map(int, input().split()))
+nums.sort()
+answer = 0
+s = 0
+e = N - 1
+now = 0
+
+for now in range(N):
+    target = nums[now]
+    s = 0
+    e = N - 1
+    
+    while s < e:
+        sum = nums[s] + nums[e]
+        if sum == target:
+            if s != now and e != now:
+                answer += 1
+                break
+            elif s == now:
+                s += 1
+            elif e == now:
+                e -= 1
+        elif sum < target:
+            s += 1
+        else:
+            e -= 1
+    
+print(answer)
