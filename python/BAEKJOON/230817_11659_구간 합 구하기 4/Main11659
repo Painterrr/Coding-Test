@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+nums = list(map(int, input().split()))
+sumList = [0]
+tmp = 0
+
+for i in nums:
+    tmp = tmp + i
+    sumList.append(tmp)
+
+for _ in range(M):
+    i, j = map(int, input().split())
+    print(sumList[j] - sumList[i - 1])
