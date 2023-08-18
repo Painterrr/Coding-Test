@@ -1,0 +1,27 @@
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+s, p = map(int, input().split())
+string = input()
+a, c, g, t = map(int, input().split())
+answer = 0
+check = {'A': 0, 'C': 0, 'G': 0, 'T': 0}
+left, right = 0, p - 1
+dna = deque(string[left:right])
+
+for ele in dna:
+    check[ele] += 1
+cnt = 0
+
+while right < s:
+    check[string[right]] += 1
+    
+    if check['A'] >= a and check['C'] >= c and check['G'] >= g and check['T'] >= t:
+        cnt += 1
+    
+    check[string[left]] -= 1
+    left += 1
+    right += 1
+
+print(cnt)
