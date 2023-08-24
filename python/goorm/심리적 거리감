@@ -1,0 +1,40 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, m, k = map(int, input().split())
+matrix = [[] for _ in range(n + 1)]
+visited = [False] * (n + 1)
+dis = [0 for _ in range(n + 1)]
+answer = 0
+
+for _ in range(m):
+	s, e = map(int, input().split())
+	matrix[s].append(e)
+
+def bfs(k):
+	dq = deque([])
+	# dq에 넣을 값: 현재 섬 번호, 건넌 다리 개수, 현재 섬 번호 - k 절대값
+	dq.append([k, 0, abs(k - k)])
+	visited[k] = True
+	
+	while dq:
+		num, cnt, now = dq.popleft()
+		dis[num]= cnt + now
+		
+		for nxt in matrix[num]:
+			if not visited[nxt]:
+				visited[nxt] = True
+				dq.append([nxt, cnt + 1, abs(nxt - k)])
+	
+bfs(k)
+
+longest = max(dis)
+for i in range(n + 1):
+    if dis[i] == longest:
+        answer = i
+
+if longest == 0:
+    print(-1)
+else:
+    print(answer)
