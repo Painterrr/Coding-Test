@@ -1,0 +1,28 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+m = int(input())
+matrix = [[] for _ in range(n + 1)]
+visited = [False] * (n + 1)
+answer = 0
+
+for i in range(m):
+	a, b = map(int, input().split())
+	matrix[a].append(b)
+	matrix[b].append(a)
+
+print(matrix)
+
+def dfs(now):
+	global answer
+	answer += 1
+	visited[now] = True
+	
+	for next in matrix[now]:
+		if not visited[next]:
+			dfs(next)
+	
+dfs(1)
+print(visited)
+print(answer)
