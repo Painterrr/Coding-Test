@@ -1,0 +1,16 @@
+N = int(input())
+items = list(map(int, input().split()))
+
+def solution(N, items):
+	answer = N // items[1]
+
+	for cntB in range(answer, -1, -1):
+		remain = N - (items[1] * cntB)
+		if remain % items[0] == 0:
+			cntA = remain // items[0]
+			answer = cntB + cntA
+			print(answer)
+			return
+	print(-1)
+	
+solution(N, items)
