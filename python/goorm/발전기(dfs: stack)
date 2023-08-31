@@ -1,0 +1,32 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+matrix = [list(map(int, input().split())) for _ in range(N)]
+visited = [[False for _ in range(N)] for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+answer = 0
+
+def dfs(startX, startY):
+	stack = [(startX, startY)]
+	
+	while stack:
+		nx, ny = stack.pop()
+		
+		for i in range(4):
+			x = nx + dx[i]
+			y = ny + dy[i]
+			
+			if 0 <= x < N and 0 <= y < N:
+				if matrix[x][y] == 1 and not visited[x][y]:
+					visited[x][y] = True
+					stack.append((x, y))
+
+for i in range(N):
+	for j in range(N):
+		if matrix[i][j] == 1 and not visited[i][j]:
+			dfs(i, j)
+			answer += 1
+
+print(answer)
