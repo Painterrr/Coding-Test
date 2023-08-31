@@ -1,0 +1,25 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+k = list(map(int, input().split()))
+answer = sum(k)
+isDelicious = False
+
+mx = max(k)
+mxIdx = k.index(mx)
+
+fstHalf = k[:mxIdx]
+scdHalf = k[mxIdx:]
+
+fstHalf.sort()
+scdHalf.sort(reverse = True)
+
+if fstHalf == k[:mxIdx]:
+	if scdHalf == k[mxIdx:]:
+		isDelicious = True
+
+if isDelicious:
+	print(answer)
+else:
+	print(0)
