@@ -1,0 +1,29 @@
+from itertools import combinations
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+S = input().rstrip()
+P = set()
+blank = [i for i in range(1, N)] # 문자열 조합을 구성하기 위한 구분자
+answer = 0
+
+comb = list(combinations(blank, 2))
+
+for f, s in comb:
+	P.add(S[:f])
+	P.add(S[f:s])
+	P.add(S[s:])
+
+P = sorted(list(P))
+
+for f, s in comb:
+	result = 0
+	
+	result += P.index(S[:f]) + 1
+	result += P.index(S[f:s]) + 1
+	result += P.index(S[s:]) + 1
+	
+	answer = max(answer, result)
+
+print(answer)
