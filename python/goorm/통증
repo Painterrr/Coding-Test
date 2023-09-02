@@ -1,0 +1,19 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+cnt = 0
+
+if N >= 14:
+	cnt += N // 14
+	N = N % 14
+
+if N >= 7:
+	cnt += N // 7
+	N = N % 7
+
+if N >= 1:
+	cnt += N // 1
+	N = N % 1
+
+print(cnt)
