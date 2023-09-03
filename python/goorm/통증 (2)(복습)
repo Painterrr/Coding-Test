@@ -1,0 +1,22 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+A, B = map(int, input().split())
+
+maxCnt = N // B
+flag = False
+answer = 0
+
+for cntB in range(maxCnt, -1, -1):
+	remain = N - (B * cntB)
+	if remain % A == 0:
+		cntA = remain // A
+		answer = cntB + cntA
+		flag = True
+		break
+
+if flag:
+	print(answer)
+else:
+	print(-1)
