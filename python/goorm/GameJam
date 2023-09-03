@@ -1,0 +1,54 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+Rg, Cg = map(int, input().split())
+Rp, Cp = map(int, input().split())
+
+Rg -= 1
+Cg -= 1
+Rp -= 1
+Cp -= 1
+
+matrix = [list(input().split()) for _ in range(N)]
+
+steps = [[0] * N for _ in range(N)]
+cmds = [[None] * N for _ in range(N)]
+direction = {'L': [0, -1], 'R': [0, 1], 'U': [-1, 0], 'D': [1, 0]}
+
+for i in range(N):
+	for j in range(N):
+		tmp = matrix[i][j]
+		steps[i][j] = int(tmp[:-1])
+		key = tmp[-1]
+		cmds[i][j] = direction[key]
+
+def move(nx, ny, N):
+	x, y = nx, ny
+	visited = [[0] * N for _ in range(N)]
+	visited[x][y] = 1
+	
+	flag = True
+	
+	while flag:
+		step = steps[x][y]
+		dx, dy = cmds[x][y]
+		
+		for _ in range(step):
+			x = (x + dx) % N
+			y = (y + dy) % N
+			
+			if visited[x][y]:
+				flag = False
+				break
+			visited[x][y] = 1
+	
+	return sum([sum(i) for i in visited])
+		
+scoreG = move(Rg, Cg, N)
+scoreP = move(Rp, Cp, N)
+
+if scoreG > scoreP:
+	print('goorm', scoreG)
+else:
+	print('player', scoreP)
