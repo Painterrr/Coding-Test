@@ -1,0 +1,48 @@
+import sys
+input = sys.stdin.readline
+
+N, K = map(int, input().split())
+matrix = [list(map(int, input().split())) for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+answer = [0] * 31
+
+def dfs(i, k):
+	stack = [(i, j)]
+	num = matrix[i][j]
+	depth = 0
+	
+	while stack:
+		x, y = stack.pop()
+  
+		if matrix[x][y] != num:
+			continue
+
+		matrix[x][y] = 0
+		depth += 1
+
+		for i in range(4):
+			nx = x + dx[i]
+			ny = y + dy[i]
+			
+			if 0 <= nx < N and 0 <= ny < N:
+				if matrix[nx][ny] == num:
+					stack.append((nx, ny))
+	
+	return depth
+	
+for i in range(N):
+	for j in range(N):
+		if matrix[i][j]:
+			num = matrix[i][j]
+			if dfs(i, j) >= K:
+				answer[num] += 1
+    
+result, tmp = 0, 0
+
+for i in range(31):
+  if tmp <= answer[i]:
+    result = i
+    tmp = answer[i]
+
+print(result)
