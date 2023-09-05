@@ -1,0 +1,19 @@
+import sys
+input = sys.stdin.readline
+
+N, K = map(int, input().split())
+fruits = [list(map(int, input().split())) for _ in range(N)]
+fruits.sort(key = lambda x : x[1] // x[0])
+answer = 0
+
+while K and fruits:
+	p, c = fruits.pop()
+	
+	if p <= K:
+		K -= p
+		answer += c
+	else:
+		answer += (c // p) * K
+		K = 0
+
+print(answer)
