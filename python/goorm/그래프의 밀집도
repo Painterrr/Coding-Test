@@ -1,0 +1,57 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+matrix = [[] for _ in range(N + 1)]
+visited = [0] * (N + 1)
+answer, density = [], 0
+
+for _ in range(M):
+	a, b = map(int, input().split())
+	matrix[a].append(b)
+	matrix[b].append(a)
+	
+def bfs(start):
+	dq = deque([start])
+	component = set()
+	
+	while dq:
+		now = dq.popleft()
+		
+		if visited[now]:
+			continue
+		
+		visited[now] = 1
+		component.add(now)
+		
+		for nxt in matrix[now]:
+			if not visited[nxt]:
+				dq.append(nxt)
+	
+	edge = 0
+	
+	for ele in component:
+		for nxt in matrix[ele]:
+			if nxt in component:
+				edge += 1
+	
+	return sorted(list(component)), edge / len(component)
+
+for i in range(1, N + 1):
+	if not visited[i]:
+		tmp, tmpDensity = bfs(i)
+		
+		if abs(tmpDensity - density) < 1e-8:
+			if len(answer) > len(tmp):
+				answer = tmp
+				density = tmpDensity
+			elif len(answer) == len(tmp):
+				if tmp[0] < answer[0]:
+					answer = tmp
+					density = tmpDensity
+		elif tmpDensity > density:
+			answer = tmp
+			density = tmpDensity
+
+print(*answer)
