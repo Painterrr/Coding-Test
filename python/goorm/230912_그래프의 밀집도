@@ -1,0 +1,57 @@
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+matrix = [[] for _ in range(N + 1)]
+visited = [False] * (N + 1)
+answer, density = [], 0
+
+for _ in range(M):
+	a, b = map(int, input().split())
+	matrix[a].append(b)
+	matrix[b].append(a)
+	
+def dfs(start):
+	stack = [start]
+	component = set([start])
+	
+	while stack:
+		now = stack.pop()
+		
+		if visited[now]:
+			continue
+		
+		visited[now] = True
+		component.add(now)
+		
+		for nxt in matrix[now]:
+			if not visited[nxt]:
+				stack.append(nxt)
+	
+	edge = 0
+	
+	for ele in component:
+		for node in matrix[ele]:
+			if node in component:
+				edge += 1
+	
+	return sorted(list(component)), edge / len(component)
+
+for i in range(1, N + 1):
+	if not visited[i]:
+		tmpList, tmpDensity = dfs(i)
+		
+		if abs(tmpDensity - density) < 1e-8:
+			if len(tmpList) < len(answer):
+				answer = tmpList
+				density = tmpDensity
+			elif len(tmpList) == len(answer):
+				if tmpList[0] < answer[0]:
+					answer = tmpList
+					density = tmpDensity
+			
+		elif density < tmpDensity:
+			answer = tmpList
+			density = tmpDensity
+
+print(*answer)
