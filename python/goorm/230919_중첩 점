@@ -1,0 +1,33 @@
+import sys
+input = sys.stdin.readline
+
+N, M = map(int, input().split())
+matrix = [[[0, 0] for _ in range(N)] for _ in range(N)]
+answer = 0
+
+for _ in range(M):
+	a, b, d = input().split()
+	a = int(a) - 1
+	b = int(b) - 1
+	
+	if d == 'U':
+		for i in range(a + 1):
+			matrix[i][b][1] += 1
+			
+	elif d == 'D':
+		for i in range(a, N):
+			matrix[i][b][1] += 1
+			
+	elif d == 'R':
+		for i in range(b, N):
+			matrix[a][i][0] += 1
+			
+	elif d == 'L':
+		for i in range(b + 1):
+			matrix[a][i][0] += 1
+
+for i in range(N):
+	for j in range(N):
+		answer += matrix[i][j][0] * matrix[i][j][1]
+
+print(answer)
