@@ -1,0 +1,38 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+N, M, S, E = map(int, input().split())
+cities = [[] for _ in range(N + 1)]
+
+def dfs(s, e, depth):
+	dq = deque([(s, depth)])
+	
+	while dq:
+		now, path = dq.popleft()
+		
+		if now == e:
+			return path
+		
+		if visited[now]:
+			continue
+		
+		visited[now] = True
+		
+		for nxt in cities[now]:
+			if not visited[nxt]:
+				dq.append([nxt, path + 1])
+		
+	return -1
+
+for i in range(M):
+	s, e = map(int, input().split())
+	cities[s].append(e)
+	cities[e].append(s)
+
+for i in range(1, N + 1):
+	visited = [False] * (N + 1)
+	visited[i] = True
+	
+	answer = dfs(S, E, 1)
+	print(answer)
