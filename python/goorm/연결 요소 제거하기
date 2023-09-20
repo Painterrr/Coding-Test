@@ -1,0 +1,45 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+N, K, Q = map(int, input().split())
+matrix = [list(input()) for _ in range(N)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+
+def bfs(r, c, d):
+	matrix[r][c] = d
+	dq = deque([(r, c)])
+	xys = set()
+	
+	while dq:
+		nx, ny = dq.popleft()
+		
+		if (nx, ny) in xys:
+			continue
+		
+		xys.add((nx, ny))
+		
+		for i in range(4):
+			x = nx + dx[i]
+			y = ny + dy[i]
+			
+			if 0 <= x < N and 0 <= y < N:
+				if matrix[x][y] == d:
+					dq.append([x, y])
+	
+	if len(xys) >= K:
+		for x, y in xys:
+			matrix[x][y] = '.'
+
+for _ in range(Q):
+	r, c, d = input().split()
+	r = int(r) - 1
+	c = int(c) - 1
+	
+	bfs(r, c, d)
+
+for i in range(N):
+	for j in range(N):
+		print(matrix[i][j], end = '')
+	print()
