@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+T, M = map(int, input().split())
+c = [int(input()) for _ in range(N)]
+hour = 0
+minute = 0
+
+total = ((T * 60) + M + sum(c)) % (24 * 60)
+
+hour = total // 60
+minute = int(total % 60)
+
+print(hour, minute)
