@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+
+N, K = map(int, input().split())
+a = list(map(int, input().split()))
+binA = [[] for _ in range(N)]
+
+for i in range(N):
+	num = bin(a[i])[2:]
+	cntOne = num.count('1')
+	binA[i] = [cntOne, a[i]]
+
+binA.sort(key = lambda x: (-x[0], -x[1]))
+
+print(binA[K - 1][1])
