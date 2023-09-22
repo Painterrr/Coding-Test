@@ -1,0 +1,23 @@
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+k = list(map(int, input().split()))
+
+maxValue = max(k)
+maxValueIdx = k.index(maxValue)
+
+fst = sorted(k[:maxValueIdx])
+scd = sorted(k[maxValueIdx:], reverse = True)
+
+def check(fst, scd, k):
+	if fst == k[:maxValueIdx]:
+		if scd == k[maxValueIdx:]:
+			return sum(k)
+		else:
+			return 0
+	else:
+		return 0
+
+answer = check(fst, scd, k)
+print(answer)
