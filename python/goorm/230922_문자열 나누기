@@ -1,0 +1,29 @@
+from itertools import combinations
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+S = input().rstrip()
+blank = [i for i in range(1, N)]
+P = set()
+answer = 0
+
+comb = list(combinations(blank, 2))
+
+for f, s in comb:
+	P.add(S[:f])
+	P.add(S[f:s])
+	P.add(S[s:])
+
+P = sorted(list(P))
+
+for f, s in comb:
+	tmp = 0
+	
+	tmp += P.index(S[:f]) + 1
+	tmp += P.index(S[f:s]) + 1
+	tmp += P.index(S[s:]) + 1
+	
+	answer = max(tmp, answer)
+	
+print(answer)
