@@ -1,0 +1,21 @@
+import sys
+input = sys.stdin.readline
+
+T = int(input())
+answer = 0
+
+for _ in range(T):
+	a, cmd, b = input().split()
+	a = int(a)
+	b = int(b)
+	
+	if cmd == '+':
+		answer += a + b
+	elif cmd == '-':
+		answer += a - b
+	elif cmd == '*':
+		answer += a * b
+	elif cmd == '/':
+		answer += int(a / b)
+
+print(answer)
