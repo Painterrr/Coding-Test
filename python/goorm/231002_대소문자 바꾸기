@@ -1,0 +1,8 @@
+N = int(input())
+string = input()
+
+for s in string:
+	if s.islower():
+		print(s.upper(), end = '')
+	else:
+		print(s.lower(), end = '')
