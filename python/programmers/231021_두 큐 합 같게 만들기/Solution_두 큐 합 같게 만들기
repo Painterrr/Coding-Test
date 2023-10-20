@@ -1,0 +1,34 @@
+from collections import deque
+
+def solution(queue1, queue2):
+    answer = 0
+    dq1 = deque(queue1)
+    dq2 = deque(queue2)
+    sum1 = sum(dq1)
+    sum2 = sum(dq2)
+    l = len(dq1)
+    flag = False
+    
+    if (sum1 + sum2) % 2 != 0:
+        return -1
+    
+    for _ in range(l * 3):
+        if sum1 == sum2:
+            flag = True
+            break
+        elif sum1 > sum2:
+            v = dq1.popleft()
+            dq2.append(v)
+            sum2 += v
+            sum1 -= v
+        elif sum1 < sum2:
+            v = dq2.popleft()
+            dq1.append(v)
+            sum1 += v
+            sum2 -= v
+        answer += 1
+    
+    if flag:
+        return answer
+    else:
+        return -1
