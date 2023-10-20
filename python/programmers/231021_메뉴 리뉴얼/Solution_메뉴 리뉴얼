@@ -1,0 +1,20 @@
+from collections import Counter
+from itertools import combinations
+
+def solution(orders, course):
+    answer = []
+    
+    for k in course:
+        candidates = []
+        for foods in orders:
+            for menu in combinations(foods, k):
+                menuList = ''.join(sorted(menu))
+                candidates.append(menuList)
+        
+        countCandidates = Counter(candidates).most_common()
+        
+        for menu, cnt in countCandidates:
+            if cnt > 1 and cnt == countCandidates[0][1]: # 가장 많이 함께 주문한 단품메뉴
+                answer.append(menu)
+        
+    return sorted(answer)
