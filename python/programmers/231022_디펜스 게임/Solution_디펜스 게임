@@ -1,0 +1,20 @@
+from heapq import heappush, heappop
+
+def solution(n, k, enemy):
+    answer = 0
+    h = []
+    eneSum = 0
+    
+    for e in enemy:
+        eneSum += e
+        heappush(h, -e)
+        
+        if eneSum > n:
+            if k <= 0:
+                break
+            eneSum += heappop(h)
+            k -= 1
+        
+        answer += 1
+    
+    return answer
