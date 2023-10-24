@@ -1,0 +1,64 @@
+def solution(p):
+    answer = ''
+    
+    if isCorrect(p):
+        return p
+    
+    answer = recur(p)
+    
+    return answer
+
+# 문자열 분리
+def sepUV(p):
+    left, right = 0, 0
+    u, v = '', ''
+    
+    for i in range(len(p)):
+        if p[i] == '(':
+            left += 1
+        else:
+            right += 1
+        if left == right:
+            u = p[:i + 1]
+            v = p[i + 1:] if right < len(p) else ''
+            break
+        
+    return u, v
+
+# 재귀
+def recur(p):
+    result = ''
+    
+    if p == '': return ''
+    
+    u, v = sepUV(p)
+
+    if isCorrect(u): result = u + recur(v)
+    else:
+        tmp = '('
+        tmp += recur(v)
+        tmp += ')'
+        u = u[1:-1]
+        for i in u:
+            if i == '(':
+                tmp += ')'
+            else:
+                tmp += '('
+        result += tmp
+    
+    return result
+
+# "올바른" 문자열 판별
+def isCorrect(p):
+    stack = []
+    
+    for i in p:
+        if i == '(':
+            stack.append(i)
+        else:
+            if not stack:
+                return False
+            elif stack[-1] == '(':
+                stack.pop()
+
+    return False if stack else True
