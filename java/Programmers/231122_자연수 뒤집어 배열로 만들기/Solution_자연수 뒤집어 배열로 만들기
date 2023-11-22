@@ -1,0 +1,13 @@
+class Solution {
+    public int[] solution(long n) {
+        String[] arr = Long.toString(n).split("");
+        int[] answer = new int[arr.length];
+        int l = arr.length;
+        
+        for (int i = 0; i < l; i++) {
+            answer[i] = Integer.parseInt(arr[l - i - 1]);
+        }
+        
+        return answer;
+    }
+}
