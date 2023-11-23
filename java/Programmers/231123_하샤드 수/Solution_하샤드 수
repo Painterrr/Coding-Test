@@ -1,0 +1,23 @@
+class Solution {
+    public int digitSum(int x) {
+        int sum = 0;
+        String[] str = Integer.toString(x).split("");
+        
+        for (String s : str) {
+            sum += Integer.parseInt(s);
+        }
+        
+        return sum;
+    }
+    
+    public boolean solution(int x) {
+        boolean answer = true;
+        int digitSum = 0;
+        
+        digitSum = digitSum(x);
+        
+        if (x % digitSum != 0) answer = false;
+        
+        return answer;
+    }
+}
