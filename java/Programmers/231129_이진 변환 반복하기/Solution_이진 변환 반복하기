@@ -1,0 +1,37 @@
+class Solution {
+    static int cnt = 0;
+    static int zero = 0;
+    
+    public int[] solution(String s) {
+        int[] answer = new int[2];
+        StringBuffer sb = new StringBuffer(s);
+        int l = 0;
+
+        while(!sb.toString().equals("1")) {
+            cnt++;
+            sb = deleteZero(sb);
+            l = sb.length();
+            sb = new StringBuffer(String.valueOf(turnToDigit(l)));
+        }
+
+        answer[0] = cnt;
+        answer[1] = zero;
+
+        return answer;
+    }
+
+    public StringBuffer deleteZero(StringBuffer sb) {
+        for(int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '0') {
+                sb.delete(i, i + 1);
+                i--;
+                zero++;
+            }
+        }
+        return sb;
+    }
+
+    public String turnToDigit(int l) {
+        return String.valueOf(Integer.toBinaryString(l));
+    }
+}
