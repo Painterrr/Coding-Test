@@ -1,0 +1,24 @@
+class Solution {
+    public int solution(int n) {
+        int answer = n + 1;
+        int zeroN = cntZero(n);
+        int zeroNxt = 0;
+        
+        while(true) {
+            zeroNxt = cntZero(answer);
+            if (zeroN == zeroNxt) return answer;
+            answer++;
+        }
+    }
+    
+    public int cntZero(int answer) {
+        int zero = 0;
+        
+        while (answer > 1) {
+            zero += answer % 2;
+            answer /= 2;
+        }
+        
+        return zero;
+    }
+}
