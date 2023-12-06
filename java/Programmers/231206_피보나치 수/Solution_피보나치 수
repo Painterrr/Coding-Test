@@ -1,0 +1,23 @@
+class Solution {
+    static int[] dp;
+    
+    public int solution(int n) {
+        int answer = 0;
+        dp = new int[n+1];
+        dp[0] = 0;
+        dp[1] = 1;
+        
+        answer = fibonacci(n);
+        
+        return answer;
+    }
+    
+    public int fibonacci(int i) {
+        if (i == 0) return dp[0];
+        if (i == 1) return dp[1];
+        
+        if (dp[i] != 0) return dp[i];
+        
+        return dp[i] = (fibonacci(i - 1) + fibonacci(i - 2)) % 1234567;
+    }
+}
