@@ -1,0 +1,36 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		Scanner sc = new Scanner(System.in);
+		Map<Long, Integer> map = new HashMap<Long, Integer>();
+		long[][] arr;
+
+		int n = sc.nextInt();
+
+		for (int i = 0; i < n; i++) {
+			Long idx = sc.nextLong();
+			map.put(idx, map.getOrDefault(idx, 0) + 1);
+		}
+
+		arr = new long[map.keySet().size()][2];
+
+		Iterator<Long> keys = map.keySet().iterator();
+
+		int idx = 0;
+		while (keys.hasNext()) {
+			long key = keys.next();
+			arr[idx][0] = key;
+			arr[idx++][1] = map.get(key);
+		}
+		
+		Arrays.sort(arr, (o1, o2) -> {
+			if (o2[1] == o1[1])
+				return Long.compare(o1[0], o2[0]);
+			return Long.compare(o2[1], o1[1]);
+		});
+
+		System.out.println(arr[0][0]);
+	}
+}
