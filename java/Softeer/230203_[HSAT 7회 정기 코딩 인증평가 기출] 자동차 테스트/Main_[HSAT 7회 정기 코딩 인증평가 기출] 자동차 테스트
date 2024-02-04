@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+	static ArrayList<Integer> m;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		int n, q;
+
+		n = Integer.parseInt(st.nextToken());
+		q = Integer.parseInt(st.nextToken());
+		m = new ArrayList<Integer>();
+
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			m.add(Integer.parseInt(st.nextToken()));
+		}
+
+		Collections.sort(m);
+
+		for (int i = 0; i < q; i++) {
+			int v = Integer.parseInt(br.readLine());
+			int idx = binarySearch(v);
+
+			int a = idx;
+			int b = n - idx - 1;
+			int answer = a * b;
+
+			if (answer <= 0)
+				bw.append(0 + "\n");
+			else
+				bw.append(answer + "\n");
+		}
+
+		bw.flush();
+	}
+
+	public static int binarySearch(int v) {
+		int left = 0;
+		int right = m.size() - 1;
+
+		while (left <= right) {
+			int mid = (left + right) / 2;
+
+			if (m.get(mid) == v)
+				return mid;
+			else if (m.get(mid) < v)
+				left = mid + 1;
+			else if (m.get(mid) > v)
+				right = mid - 1;
+
+		}
+
+		return -1;
+	}
+}
