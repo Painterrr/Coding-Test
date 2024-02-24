@@ -1,0 +1,135 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+	static int[][] matrix;
+	static int N, time;
+	static Fish shark;
+	static int[] dy = { -1, 1, 0, 0 };
+	static int[] dx = { 0, 0, -1, 1 };
+	static boolean cantReach;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+
+		N = Integer.parseInt(br.readLine());
+		matrix = new int[N][N];
+		time = 0;
+
+		for (int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < N; j++) {
+				matrix[i][j] = Integer.parseInt(st.nextToken());
+
+				if (matrix[i][j] == 9)
+					shark = new Fish(i, j, 0, 0, 2);
+			}
+		}
+
+		while (true) {
+			if (!anyFish())
+				break;
+
+			move();
+
+			if (cantReach)
+				break;
+		}
+
+		System.out.println(time);
+	}
+
+	public static void get(Fish now) {
+		matrix[now.y][now.x] = 9;
+		matrix[shark.y][shark.x] = 0;
+
+		shark.y = now.y;
+		shark.x = now.x;
+
+		if (shark.full + 1 >= shark.size) {
+			shark.full = 0;
+			shark.size++;
+		} else
+			shark.full++;
+
+		time += now.dist;
+	}
+
+	public static void move() {
+		PriorityQueue<Fish> pq = new PriorityQueue<Fish>();
+		boolean[][] visited = new boolean[N][N];
+		pq.add(shark);
+		visited[shark.y][shark.x] = true;
+
+		while (!pq.isEmpty()) {
+			Fish now = pq.poll();
+
+			if (0 < now.size && now.size < shark.size) {
+				get(now);
+				break;
+			}
+
+			for (int i = 0; i < 4; i++) {
+				int y = now.y + dy[i];
+				int x = now.x + dx[i];
+
+				if (0 > y || y >= N || 0 > x || x >= N)
+					continue;
+
+				if (matrix[y][x] > shark.size)
+					continue;
+
+				if (!visited[y][x]) {
+					pq.add(new Fish(y, x, now.dist + 1, 0, matrix[y][x]));
+					visited[y][x] = true;
+				}
+			}
+
+			if (pq.isEmpty())
+				cantReach = true;
+		}
+	}
+
+	public static boolean anyFish() {
+		boolean flag = false;
+
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < N; j++) {
+				if (0 < matrix[i][j] && matrix[i][j] < shark.size) {
+					flag = true;
+					break;
+				}
+			}
+		}
+
+		return flag;
+	}
+}
+
+class Fish implements Comparable<Fish> {
+	int y;
+	int x;
+	int dist;
+	int full;
+	int size;
+
+	public Fish(int y, int x, int dist, int full, int size) {
+		this.y = y;
+		this.x = x;
+		this.dist = dist;
+		this.full = full;
+		this.size = size;
+	}
+
+	@Override
+	public int compareTo(Fish o) {
+		if (dist == o.dist) {
+			if (y == o.y)
+				return x - o.x;
+			else
+				return y - o.y;
+		} else
+			return dist - o.dist;
+	}
+}
