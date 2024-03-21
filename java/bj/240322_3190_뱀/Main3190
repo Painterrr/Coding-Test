@@ -1,0 +1,86 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+	static int[][] matrix;
+	static Deque<int[]> snake = new ArrayDeque<>();
+	static int N, L;
+	static String[][] toGo;
+	static int nowDir;
+	static int[] dy = { -1, 0, 1, 0 };
+	static int[] dx = { 0, 1, 0, -1 };
+	static boolean flag;
+	static int time;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+
+		N = Integer.parseInt(br.readLine());
+		int K = Integer.parseInt(br.readLine());
+
+		matrix = new int[N + 1][N + 1];
+		for (int i = 0; i < K; i++) {
+			st = new StringTokenizer(br.readLine());
+			matrix[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] = 2;
+		}
+
+		L = Integer.parseInt(br.readLine());
+		toGo = new String[L][2];
+		for (int i = 0; i < L; i++) {
+			st = new StringTokenizer(br.readLine());
+			toGo[i][0] = st.nextToken();
+			toGo[i][1] = st.nextToken();
+		}
+
+		snake.addFirst(new int[] { 1, 1 });
+		matrix[1][1] = 1;
+		nowDir = 1;
+		start();
+	}
+
+	public static boolean canContinue(int nx, int ny) {
+		if (0 >= ny || ny > N || 0 >= nx || nx > N || matrix[ny][nx] == 1)
+			flag = true;
+
+		return flag;
+	}
+
+	public static void changeDir(String c) {
+		if (c.equals("L"))
+			nowDir = (nowDir + 3) % 4;
+		else
+			nowDir = (nowDir + 1) % 4;
+	}
+
+	public static void start() {
+		int idx = 0;
+
+		while (true) {
+			time++;
+
+			System.out.println("head: " + snake.peekFirst()[0] + " " + snake.peekFirst()[1]);
+
+			int ny = snake.peekFirst()[0] + dy[nowDir];
+			int nx = snake.peekFirst()[1] + dx[nowDir];
+
+			if (canContinue(nx, ny))
+				break;
+
+			snake.addFirst(new int[] { ny, nx });
+
+			if (matrix[ny][nx] != 2) {
+				matrix[snake.peekLast()[0]][snake.peekLast()[1]] = 0;
+				snake.pollLast();
+			}
+			matrix[ny][nx] = 1;
+
+			if (idx < L && time == Integer.parseInt(toGo[idx][0])) {
+				changeDir(toGo[idx][1]);
+				idx++;
+			}
+		}
+
+		System.out.println(time);
+	}
+}
