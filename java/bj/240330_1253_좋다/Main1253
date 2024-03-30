@@ -1,0 +1,58 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+	static int[] arr;
+	static int N;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+
+		N = Integer.parseInt(br.readLine());
+		arr = new int[N];
+		st = new StringTokenizer(br.readLine());
+
+		for (int i = 0; i < N; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+
+		Arrays.sort(arr);
+
+		good();
+	}
+
+	public static void good() {
+		int ans = 0;
+		
+		for (int i = 0; i < N; i++) {
+			int s = 0;
+			int e = N - 1;
+
+			while (true) {
+				if (s == i)
+					s++;
+				
+				if (e == i)
+					e--;
+				
+				if (s == e)
+					break;
+
+				int sum = arr[s] + arr[e];
+				
+				if (arr[i] == sum) {
+					ans++;
+					break;
+				
+				} else if (arr[i] > sum)
+					s++;
+				
+				else if (arr[i] < sum)
+					e--;
+			}
+		}
+
+		System.out.println(ans);
+	}
+}
