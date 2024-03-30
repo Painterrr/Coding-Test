@@ -1,0 +1,49 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+	static int[] arr;
+	static int n, x;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+
+		n = Integer.parseInt(br.readLine());
+		arr = new int[n];
+		st = new StringTokenizer(br.readLine());
+
+		for (int i = 0; i < n; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+		
+		x = Integer.parseInt(br.readLine());
+		
+		Arrays.sort(arr);
+		
+		sum();
+	}
+
+	public static void sum() {
+		int ans = 0;
+		int s = 0;
+		int e = n - 1;
+		
+		while(true) {
+			if (s >= e)
+				break;
+			
+			if (arr[s] + arr[e] == x) {
+				ans++;
+				s++;
+				e--;
+			} else if (arr[s] + arr[e] > x)
+				e--;
+			
+			else if (arr[s] + arr[e] < x)
+				s++;
+		}
+		
+		System.out.println(ans);
+	}
+}
