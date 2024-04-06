@@ -1,0 +1,53 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+	static int N;
+	static int[] arr;
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+
+		N = Integer.parseInt(br.readLine());
+		arr = new int[N];
+
+		st = new StringTokenizer(br.readLine());
+
+		for (int i = 0; i < N; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+
+		Arrays.sort(arr);
+
+		find();
+	}
+
+	public static void find() {
+		int s = 0;
+		int e = arr.length - 1;
+		int min = 2000000000;
+		int[] ans = new int[2];
+
+		while (s < e) {
+			int now = arr[s] + arr[e];
+
+			if (Math.abs(now) < min) {
+				min = Math.abs(now);
+				ans[0] = arr[s];
+				ans[1] = arr[e];
+			}
+
+			if (now > 0)
+				e--;
+
+			else if (now < 0)
+				s++;
+			
+			else
+				break;
+		}
+
+		System.out.print(ans[0] + " " + ans[1]);
+	}
+}
