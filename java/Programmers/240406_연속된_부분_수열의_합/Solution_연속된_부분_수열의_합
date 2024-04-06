@@ -1,0 +1,25 @@
+class Solution {
+    public int[] solution(int[] sequence, int k) {
+        int l = sequence.length;
+        int[] answer = {0, l};
+        int sum = 0;
+        int idx = 0;
+        
+        for (int i = 0; i < l; i++) {
+            while(sum < k && idx < l) {
+                sum += sequence[idx++];
+            }
+            
+            if (sum == k) {
+                if (answer[1] - answer[0] > idx - i - 1) {
+                    answer[0] = i;
+                    answer[1] = idx - 1;
+                }
+            }
+            
+            sum -= sequence[i];
+        }
+        
+        return answer;
+    }
+}
