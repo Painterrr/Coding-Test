@@ -1,0 +1,55 @@
+class Solution {
+    static int[][][] matrix;
+    static int[] pos;
+    
+    public int solution(String dirs) {
+        int answer = 0;
+        
+        matrix = new int[11][11][4];
+        pos = new int[] { 5, 5 };
+        
+        answer = move(dirs);
+        
+        return answer;
+    }
+    
+    public static int move(String dirs) {
+        int[] dy = {-1, 0, 1, 0}; // U, L, D, R
+        int[] dx = {0, -1, 0, 1}; // 0, 1, 2, 3
+        int[] nxt = new int[2];
+        int d = 0;
+        int cnt = 0;
+        
+        for (int i = 0; i < dirs.length(); i++) {
+            
+            if (dirs.charAt(i) == 'U')
+                d = 0;
+                
+            else if (dirs.charAt(i) == 'D')
+                d = 2;
+                
+            else if (dirs.charAt(i) == 'R')
+                d = 3;
+               
+            else if (dirs.charAt(i) == 'L')
+                d = 1;
+            
+            nxt[0] = pos[0] + dy[d];
+            nxt[1] = pos[1] + dx[d];
+            
+            if (0 <= nxt[0] && nxt[0] < 11 && 0 <= nxt[1] && nxt[1] < 11) {
+                
+                if (matrix[pos[0]][pos[1]][d] == 0) {
+                    matrix[pos[0]][pos[1]][d] = 1;
+                    matrix[nxt[0]][nxt[1]][(d + 2) % 4] = 1;
+                    cnt++;
+                }
+                    
+                pos[0] = nxt[0];
+                pos[1] = nxt[1];
+            }
+        }
+        
+        return cnt;
+    }
+}
