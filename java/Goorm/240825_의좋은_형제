@@ -1,0 +1,46 @@
+import java.io.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] input = br.readLine().split(" ");
+		int g = Integer.parseInt(input[0]);
+		int b = Integer.parseInt(input[1]);
+		
+		int d = Integer.parseInt(br.readLine());
+		
+		for (int i = 0; i < d; i++) {
+			if (0 == i % 2) { // g -> b
+				int[] ans = cal(g, b);
+				
+				g = ans[0];
+				b = ans[1];
+			} else { // b -> g
+				int[] ans = cal(b, g);
+				
+				b = ans[0];
+				g = ans[1];
+			}
+		}
+		
+		System.out.print(g + " " + b);
+	}
+	
+	public static int[] cal (int give, int take) {
+		int half = 0;
+		
+		if (0 == give % 2) {
+			half = give / 2;
+
+			give -= half;
+			take += half;
+
+		} else {
+			half = (give / 2) + 1;
+
+			give -= half;
+			take += half;
+		}
+
+		return new int[] {give, take};
+	}
+}
