@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int t = Integer.parseInt(br.readLine());
+		List<String> ans = new ArrayList<>();
+		
+		for (int i = 0; i < t; i++) {
+			String[] input = br.readLine().split(" ");
+			int x = Integer.parseInt(input[0]);
+			int y = Integer.parseInt(input[1]);
+			int n = Integer.parseInt(input[2]);
+			
+			if (canReach(x, y, n)) {
+				ans.add("YES");
+			} else {
+				ans.add("NO");
+			}
+		}
+		
+		for (int i = 0; i < t; i++) {
+			System.out.println(ans.get(i));
+		}
+	}
+	
+	public static boolean canReach(int x, int y, int n) {
+		int dis = Math.abs(x) + Math.abs(y);
+		
+		return dis <= n && (dis % 2 == n % 2);
+	}
+}
