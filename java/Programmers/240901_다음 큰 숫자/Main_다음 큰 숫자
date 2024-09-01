@@ -1,0 +1,26 @@
+class Solution {
+    public int solution(int n) {
+        int answer = n + 1;
+        int nOne = cntOne(n);
+        
+        while (true) {
+            int nxtOne = cntOne(answer);
+            
+            if (nxtOne == nOne)
+                return answer;
+            
+            answer++;
+        }
+    }
+    
+    public int cntOne(int num) {
+        int cnt = 0;
+        
+        while (num > 0) {
+            cnt += num % 2;
+            num /= 2;
+        }
+        
+        return cnt;
+    }
+}
