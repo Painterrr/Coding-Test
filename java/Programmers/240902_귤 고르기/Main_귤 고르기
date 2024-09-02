@@ -13,19 +13,18 @@ class Solution {
         cnts.sort(Collections.reverseOrder());
         
         int total = 0;
-        int type = 0;
+        int types = 0;
         
         // 종류를 최소화 하려면 한번에 담기는 개수가 많아야 함
         for (int c: cnts) {
-            if (total + c <= k) {
-                total += c;
-                type++;
-            } else if (total < k) {
-                type++;
+            total += c;
+            types++;
+
+            // k개를 초과해도 조건은 만족함
+            if (total >= k)
                 break;
-            }
         }
         
-        return answer = type;
+        return answer = types;
     }
 }
