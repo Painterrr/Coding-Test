@@ -1,0 +1,27 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Queue<String[]> q = new LinkedList<>();
+
+        int n = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < n; i++) {
+            q.add(br.readLine().split(" "));
+        }
+
+        while (q.size() > 1) {
+            int target = Integer.parseInt(q.poll()[1]);
+
+            for (int i = 0; i < target - 1; i++) {
+                q.add(q.poll());
+            }
+            q.poll();
+        }
+
+        System.out.println(q.poll()[0]);
+    }
+}
