@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] input = br.readLine().split(" ");
+        int n = Integer.parseInt(input[0]); // fee
+        int m = Integer.parseInt(input[1]); // cars
+        int ans = 0;
+
+        int[][] fee = new int[n][2]; // fee, car num
+        int[] weight = new int[m + 1];
+        Queue<Integer> wait = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            fee[i][0] = Integer.parseInt(br.readLine());
+        }
+
+        for (int i = 1; i < m + 1; i++) {
+            weight[i] = Integer.parseInt(br.readLine());
+        }
+
+        for (int i = 0; i < m * 2; i++) {
+            // check parking lot
+            int now = Integer.parseInt(br.readLine());
+
+            if (now > 0) { // in
+                 boolean isEmpty = false;
+                 int where = -1;
+
+                 for (int j = 0; j < fee.length; j++) {
+                     if (fee[j][1] == 0) {
+                         isEmpty = true;
+                         where = j;
+                         break;
+                     }
+                 }
+
+                 if (isEmpty) {
+                     fee[where][1] = now;
+                 } else {
+                     wait.add(now);
+                 }
+            } else { // out
+                int where = -1;
+                int nowFee = 0;
+                now = -now;
+
+                for (int j = 0; j < fee.length; j++) {
+                    if (fee[j][1] == now) {
+                        where = j;
+                        nowFee = fee[j][0];
+                        fee[j][1] = 0;
+                        break;
+                    }
+                }
+
+                ans += nowFee * weight[now];
+
+                if (!wait.isEmpty()) {
+                    int nowCar = wait.poll();
+                    fee[where][1] = nowCar;
+                }
+            }
+        }
+
+        System.out.println(ans);
+    }
+}
