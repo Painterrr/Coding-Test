@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        long n = Integer.parseInt(br.readLine());
+        Queue<Long> q = new LinkedList<>();
+
+        for (long i = 1; i <= n; i++) {
+            q.add(i);
+        }
+
+        for (long i = 1; i < n; i++) {
+            long t3 = (i * i * i) % q.size();
+
+            if (t3 == 0)
+                t3 = q.size();
+
+            for (int j = 0; j < t3 - 1; j++) {
+                q.add(q.poll());
+            }
+
+            q.poll();
+        }
+
+        System.out.println(q.poll());
+    }
+}
