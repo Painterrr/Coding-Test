@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < t; i++) {
+            int cnt = 0;
+            String[] input = br.readLine().split(" ");
+            int n = Integer.parseInt(input[0]);
+            int target = Integer.parseInt(input[1]);
+            Queue<int[]> q = new LinkedList<>(); // doc num, imp
+            ArrayList<Integer> imp = new ArrayList<>(); // important
+
+            input = br.readLine().split(" ");
+            for (int j = 0; j < n; j++) {
+                q.add(new int[] {j, Integer.parseInt(input[j])});
+                imp.add(Integer.parseInt(input[j]));
+            }
+
+            imp.sort(Collections.reverseOrder());
+
+            cnt = findTarget(target, q, imp);
+            System.out.println(cnt);
+        }
+    }
+
+    public static int findTarget(int target, Queue<int[]> q, ArrayList<Integer> imp) {
+        int cnt = 0;
+
+        while (true) {
+            int[] now = q.peek();
+
+            if (now[1] == imp.get(0)) {
+                q.poll(); // print
+
+                if (now[0] == target) {
+                    cnt++;
+                    break;
+                } else {
+                    cnt++;
+                    imp.remove(0);
+                }
+            } else {
+                q.add(q.poll());
+            }
+        }
+
+        return cnt;
+    }
+}
