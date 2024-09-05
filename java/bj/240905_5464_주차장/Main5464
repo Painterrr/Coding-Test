@@ -1,0 +1,62 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] NM = br.readLine().split(" ");
+
+        int n = Integer.parseInt(NM[0]);
+        int m = Integer.parseInt(NM[1]);
+        int fee = 0;
+
+        int[][] parkingLot = new int[n][2]; //  fee, car num
+        Queue<Integer> wait = new LinkedList<>();
+        int[] cars = new int[m + 1]; // idx = carNum, value = weigh
+
+        for (int i = 0; i < n; i++) {
+            parkingLot[i][0] = Integer.parseInt(br.readLine());
+        }
+
+        for (int i = 1; i <= m; i++) {
+            cars[i] = Integer.parseInt(br.readLine());
+        }
+
+        for (int i = 0; i < m * 2; i++) {
+            int carNum = Integer.parseInt(br.readLine());
+
+            if (0 < carNum) { // in
+                int isEmpty = findWhere(0, parkingLot);
+
+                if (-1 == isEmpty) { // no empty
+                    wait.add(carNum);
+                } else { // find empty
+                    parkingLot[isEmpty][1] = carNum;
+                }
+
+            } else { // out
+                carNum = -carNum;
+                int where = findWhere(carNum, parkingLot);
+
+                if (!wait.isEmpty()) {
+                    parkingLot[where][1] = wait.poll();
+                } else {
+                    parkingLot[where][1] = 0;
+                }
+
+                fee += cars[carNum] * parkingLot[where][0];
+            }
+        }
+
+        System.out.println(fee);
+    }
+
+    public static int findWhere(int carNum, int[][] parkingLot) {
+        for (int i = 0; i < parkingLot.length; i++) {
+            if (carNum == parkingLot[i][1])
+                return i;
+        }
+
+        return -1; // no empty
+    }
+}
