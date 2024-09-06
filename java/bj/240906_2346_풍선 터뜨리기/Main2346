@@ -1,0 +1,40 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        Deque<int[]> dq = new ArrayDeque<>();
+        int n = Integer.parseInt(br.readLine());
+
+        String[] input = br.readLine().split(" ");
+
+        for (int i = 1; i <= n; i++) {
+            dq.add(new int[] {i, Integer.parseInt(input[i - 1])});
+        }
+
+        bw.append(dq.peekFirst()[0] + " ");
+        int now = dq.pollFirst()[1];
+
+        while (!dq.isEmpty()) {
+
+            if (now > 0) {
+                for (int i = 0; i < now - 1; i++) {
+                    dq.addLast(dq.pollFirst());
+                }
+            } else {
+                now = -now;
+                for (int i = 0; i < now; i++) {
+                    dq.addFirst(dq.pollLast());
+                }
+            }
+
+            bw.append(dq.peekFirst()[0] + " ");
+            now = dq.pollFirst()[1];
+        }
+
+        bw.flush();
+        bw.close();
+    }
+}
