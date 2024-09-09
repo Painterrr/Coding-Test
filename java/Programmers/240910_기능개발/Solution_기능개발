@@ -1,0 +1,63 @@
+import java.util.*;
+
+class Solution {
+    static Queue<Integer> p; // progresses
+    static Queue<Integer> s; // speeds
+    static ArrayList<Integer> completed;
+    static int l;
+    
+    public int[] solution(int[] progresses, int[] speeds) {
+        int[] answer;
+        
+        p = new ArrayDeque<>();
+        s = new ArrayDeque<>();
+        completed = new ArrayList<>();
+        
+        for (int i = 0; i < progresses.length; i++) {
+            p.add(progresses[i]);
+            s.add(speeds[i]);
+        }
+        
+        while (!p.isEmpty()) {
+            l = p.size();
+            
+            proceed();
+            
+            int cnt = canCd();
+            
+            if (cnt != 0)
+                completed.add(cnt);
+        }
+        
+        answer = new int[completed.size()];
+        
+        for (int i = 0; i < answer.length; i++) {
+            answer[i] = completed.get(i);
+        }
+        
+        return answer;
+    }
+    
+    public int canCd() {
+        int cnt = 0;
+        
+        for (int i = 0; i < l; i++) {
+            if (p.peek() >= 100) {
+                cnt++;
+                p.poll();
+                s.poll();
+            } else {
+                break;
+            }
+        }
+        
+        return cnt;
+    }
+    
+    public void proceed() {
+        for (int i = 0; i < l; i++) {
+            p.add(p.poll() + s.peek());
+            s.add(s.poll());
+        }
+    }
+}
