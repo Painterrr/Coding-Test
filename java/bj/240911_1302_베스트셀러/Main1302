@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        HashMap<String, Integer> map = new HashMap<>();
+        ArrayList<String> sort = new ArrayList<>();
+        String[] origin = new String[n];
+        int[] count = new int[n];
+        int max = 0;
+
+        for (int i = 0; i < n; i++) {
+            String book = br.readLine();
+            map.put(book, map.getOrDefault(book, 0) + 1);
+        }
+
+        int idx = 0;
+        for (String k: map.keySet()) {
+            origin[idx] = k;
+            idx++;
+        }
+
+        idx = 0;
+        for (int v: map.values()) {
+            if (max < v)
+                max = v;
+            count[idx] = v;
+            idx++;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (max == count[i]) {
+                sort.add(origin[i]);
+            }
+        }
+
+        Collections.sort(sort);
+
+        System.out.println(sort.get(0));
+    }
+}
