@@ -1,0 +1,30 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        HashMap<String, Integer> map = new HashMap<>();
+        String[] input = br.readLine().split(" ");
+        int k = Integer.parseInt(input[0]); // 수강가능 인원
+        int l = Integer.parseInt(input[1]); // 대기인원
+
+        for (int i = 0; i < l; i++) {
+            map.put(br.readLine(), i);
+        }
+
+        String[] num = new String[l];
+        for (String key: map.keySet()) {
+            num[map.get(key)] = key;
+        }
+
+        for (int i = 0; i < l; i++) {
+            if (num[i] != null) {
+                System.out.println(num[i]);
+                k--;
+            }
+            if (0 == k)
+                break;
+        }
+    }
+}
