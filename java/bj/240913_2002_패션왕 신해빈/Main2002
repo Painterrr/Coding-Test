@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        HashMap<String, Integer> map = new HashMap<>();
+        int n = Integer.parseInt(br.readLine());
+        String[] cars = new String[n];
+        int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            String name = br.readLine();
+            map.put(name, i);
+        }
+
+        for (int i = 0; i < n; i++) {
+            cars[i] = br.readLine();
+        }
+
+        int min = map.get(cars[n - 1]);
+        for (int i = n - 2; i >= 0; i--) {
+            if (map.get(cars[i]) > min) {
+                ans++;
+            } else {
+                min = map.get(cars[i]);
+            }
+        }
+
+        System.out.println(ans);
+    }
+}
