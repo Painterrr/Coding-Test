@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        PriorityQueue<Integer> small = new PriorityQueue<>();
+        PriorityQueue<Integer> big = new PriorityQueue<>();
+        int n = Integer.parseInt(br.readLine());
+
+        small.add(10001);
+        big.add(10001);
+
+        for (int i = 0; i < n; i++) {
+            int num = Integer.parseInt(br.readLine());
+
+            if (0 == i % 2) {
+                small.add(-num);
+
+                if (-small.peek() > big.peek()) {
+                    big.add(-small.poll());
+                    small.add(-big.poll());
+                }
+
+                bw.append(-small.peek() + "\n");
+            } else {
+                small.add(-num);
+                big.add(-small.poll());
+                bw.append(-small.peek() + "\n");
+            }
+        }
+
+        bw.flush();
+    }
+}
