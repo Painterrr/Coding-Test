@@ -1,0 +1,32 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        int n = Integer.parseInt(br.readLine());
+
+        String[] input = br.readLine().split(" ");
+        for (int i = 0; i < n; i++) {
+            pq.add(Integer.parseInt(input[i]));
+        }
+
+        for (int i = 0; i < (n - 1); i++) {
+            input = br.readLine().split(" ");
+
+            for (int j = 0; j < n; j++) {
+                int num = Integer.parseInt(input[j]);
+
+                if (num < pq.peek())
+                    continue;
+                else {
+                    pq.poll();
+                    pq.add(num);
+                }
+            }
+        }
+
+        System.out.println(pq.poll());
+    }
+}
