@@ -1,0 +1,20 @@
+-- product
+-- PRODUCT_ID: 상품ID
+-- PRODUCT_CODE: 상품코드
+-- PRICE: 판매가
+
+-- OFFLINE_SALE
+-- OFFLINE_SALE_ID: 상품판매ID
+-- PRODUCT_ID: 상품ID
+-- SALES_AMOUNT: 판매량
+-- SALES_DATE: 판매일
+
+-- 상품코드별 매출액(판매가 * 판매량) 합계
+-- 매출액 기준 내림차순
+-- 같은 매출액은 상품코드 기준 오름차순
+
+select p.product_code, sum (p.price * s.sales_amount) as sales
+from product p
+join offline_sale s on p.product_id = s.product_id
+group by p.product_code
+order by sales desc, p.product_code;
