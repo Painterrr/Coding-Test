@@ -1,0 +1,8 @@
+-- 입양 못 간 애들 중 가장 오래 있던 동물 3마리 이름, 보호 시작일
+SELECT i.name, i.datetime
+from animal_ins i
+left join animal_outs o
+on i.animal_id = o.animal_id
+where o.animal_id is null
+order by i.datetime
+limit 3;
