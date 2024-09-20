@@ -1,0 +1,35 @@
+import java.util.*;
+
+class Solution {
+    public int solution(String[] want, int[] number, String[] discount) {
+        HashMap<String, Integer> wants = new HashMap<>();
+        HashMap<String, Integer> dc = new HashMap<>();
+        int answer = 0;
+        
+        for (int i = 0; i < want.length; i++) {
+            wants.put(want[i], number[i]);
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            dc.put(discount[i], dc.getOrDefault(discount[i], 0) + 1);
+        }
+        
+        for (int i = 10; i < discount.length; i++) {
+            if (wants.equals(dc))
+                answer++;
+            
+            String oldOne = discount[i - 10];
+            dc.put(oldOne, dc.get(oldOne) - 1);
+            if (dc.get(oldOne) == 0)
+                dc.remove(oldOne);
+            
+            String newOne = discount[i];
+            dc.put(newOne, dc.getOrDefault(newOne, 0) + 1);
+        }
+        
+        if (wants.equals(dc))
+            answer++;
+        
+        return answer;
+    }
+}
