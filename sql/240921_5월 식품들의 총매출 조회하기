@@ -1,0 +1,12 @@
+-- 생산일자 2022 5월 식품들의 식품 ID, 총매출 조회
+-- 총 매출 기준 내림차순, 식품 ID 오름차순
+select p.product_id, p.product_name, sum(p.price * o.amount) as total_sales
+from food_product p
+
+join food_order o
+on p.product_id = o.product_id
+
+where to_char(o.produce_date, 'yyyy-mm') = '2022-05'
+group by p.product_id, p.product_name
+
+order by total_sales desc, p.product_id asc;
