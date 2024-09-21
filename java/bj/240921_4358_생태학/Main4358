@@ -1,0 +1,32 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        HashMap<String, Integer> map = new HashMap<>();
+        ArrayList<String> trees = new ArrayList<>();
+        String key;
+        int total = 0;
+
+        while((key = br.readLine()) != null && key.length() != 0) {
+            map.put(key, map.getOrDefault(key, 0) + 1) ;
+            total++;
+        }
+
+        for (String k: map.keySet()) {
+            trees.add(k);
+        }
+
+        Collections.sort(trees);
+
+        for (String tree: trees) {
+            key = tree;
+            int cnt = map.get(key);
+            bw.append(key + " " + String.format("%.4f", (double)100 * cnt / total) + "\n");
+        }
+
+        bw.flush();
+    }
+}
