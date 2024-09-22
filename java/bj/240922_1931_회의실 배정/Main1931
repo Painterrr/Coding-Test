@@ -1,0 +1,50 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        ArrayList<Meeting> list = new ArrayList<>();
+        int answer = 0;
+
+        for (int i = 0; i < n; i++) {
+            String[] input = br.readLine().split(" ");
+            list.add(new Meeting(
+                    Integer.parseInt(input[0]), Integer.parseInt(input[1])
+            ));
+        }
+
+        Collections.sort(list, new Comparator<Meeting>() {
+            @Override
+            public int compare (Meeting m1, Meeting m2) {
+                if (m1.e == m2.e) {
+                    return m1.s - m2.s;
+                } else
+                    return m1.e - m2.e;
+            }
+        });
+
+        int end = 0;
+        for (int i = 0; i < n; i++) {
+            int start = list.get(i).s;
+
+            if (start >= end) {
+                end = list.get(i).e;
+                answer++;
+            }
+        }
+
+        System.out.println(answer);
+    }
+}
+
+class Meeting {
+    int s;
+    int e;
+
+    public Meeting(int s, int e) {
+        this.s = s;
+        this.e = e;
+    }
+}
