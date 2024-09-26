@@ -1,0 +1,20 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        ArrayList<Integer> line = new ArrayList<>();
+
+        String[] input = br.readLine().split(" ");
+
+        for (int i = n; i > 0; i--) {
+            line.add(Integer.parseInt(input[i - 1]), i);
+        }
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(line.get(i) + " ");
+        }
+    }
+}
