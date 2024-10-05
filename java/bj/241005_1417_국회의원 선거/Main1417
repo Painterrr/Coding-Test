@@ -1,0 +1,25 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PriorityQueue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+        int n = Integer.parseInt(br.readLine());
+
+        int dasom = Integer.parseInt(br.readLine());
+
+        for (int i = 1; i < n; i++) {
+            pq.add(Integer.parseInt(br.readLine()));
+        }
+
+        int ans = 0;
+        while (!pq.isEmpty() && pq.peek() >= dasom) {
+            dasom++;
+            pq.add(pq.poll() - 1);
+            ans++;
+        }
+
+        System.out.println(ans);
+    }
+}
