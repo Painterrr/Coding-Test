@@ -1,0 +1,88 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static ArrayList<Room> list = new ArrayList<>();
+    static HashMap<String, Integer> map = new HashMap<>();
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int p = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+        String[] input = br.readLine().split(" ");
+        makeRoom(input[1], Integer.parseInt(input[0]));
+
+        for (int i = 0; i < p - 1; i++) {
+            input = br.readLine().split(" ");
+            String nickname = input[1];
+            int lv = Integer.parseInt(input[0]);
+
+            boolean find = false;
+
+            for (int j = 0; j < list.size(); j++) {
+                Room now = list.get(j);
+                if (now.players.size() < m
+                        && now.lvLimit[0] <= Integer.parseInt(input[0])
+                        && Integer.parseInt(input[0]) <= now.lvLimit[1]) {
+                    now.players.add(nickname);
+                    now.lv.add(lv);
+                    map.put(nickname, lv);
+                    find = true;
+                    break;
+                }
+            }
+
+            if (!find) {
+                makeRoom(nickname, lv);
+            }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).players.size() == m) {
+                System.out.println("Started!");
+                printRoom(i);
+            } else {
+                System.out.println("Waiting!");
+                printRoom(i);
+            }
+        }
+    }
+
+    public static void printRoom(int idx) {
+        ArrayList<String> nickname = list.get(idx).players;
+        Collections.sort(nickname);
+
+        for (int i = 0; i < list.get(idx).players.size(); i++) {
+            System.out.print(map.get(nickname.get(i)) + " ");
+            System.out.println(nickname.get(i));
+        }
+    }
+
+    public static void makeRoom(String nickname, int lv) {
+        ArrayList<String> players = new ArrayList<>();
+        players.add(nickname);
+
+        ArrayList<Integer> lvs = new ArrayList<>();
+        lvs.add(lv);
+
+        int[] lvLimit = new int[] {lv - 10, lv + 10};
+
+        list.add(new Room(players, lvs, lvLimit));
+
+        map.put(nickname, lv);
+    }
+}
+
+class Room {
+    ArrayList<String> players;
+    ArrayList<Integer> lv;
+    int[] lvLimit;
+
+    public Room (ArrayList<String> players, ArrayList<Integer> lv, int[] lvLimit) {
+        this.players = players;
+        this.lv = lv;
+        this.lvLimit = lvLimit;
+    }
+}
