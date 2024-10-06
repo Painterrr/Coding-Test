@@ -1,0 +1,22 @@
+class Solution {
+    static int answer = 0;
+    
+    public int solution(int[] numbers, int target) {
+        makeTarget(numbers, target, 0, 0);
+        
+        return answer;
+    }
+    
+    public void makeTarget (int[] numbers, int target, int idx, int sum) {
+        if (idx == numbers.length) {
+            if (sum == target)
+                answer++;
+            return;
+        }
+        
+        if (idx < numbers.length) {
+            makeTarget(numbers, target, idx + 1, sum + numbers[idx]);
+            makeTarget(numbers, target, idx + 1, sum - numbers[idx]);
+        }
+    }
+}
