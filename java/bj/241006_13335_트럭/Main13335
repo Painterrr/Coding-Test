@@ -1,0 +1,42 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int w = Integer.parseInt(st.nextToken());
+        int L = Integer.parseInt(st.nextToken());
+        int l = 0; // 현재 다리 하중
+
+        Queue<Integer> truck = new ArrayDeque<>();
+        Queue<Integer> bridge = new ArrayDeque<>();
+        int ans = 0;
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            truck.add(Integer.parseInt(st.nextToken()));
+        }
+
+        for (int i = 0; i < w; i++) {
+            bridge.add(0);
+        }
+
+        while (bridge.size() != 0) {
+            l -= bridge.poll();
+
+            if (!truck.isEmpty()) {
+                if (L >= l + truck.peek()) {
+                    bridge.add(truck.peek());
+                    l += truck.poll();
+                } else {
+                    bridge.add(0);
+                }
+            }
+            ans++;
+        }
+
+        System.out.println(ans);
+    }
+}
