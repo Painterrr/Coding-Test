@@ -1,0 +1,26 @@
+class Solution {
+    public int solution(String[][] book_time) {
+        int answer = 0;
+        int[] time = new int[1500];
+        int l = book_time.length;
+        
+        for (int i = 0; i < l; i++) {
+            String[] start = book_time[i][0].split(":");
+            String[] end = book_time[i][1].split(":");
+            
+            int s = Integer.parseInt(start[0]) * 60 + Integer.parseInt(start[1]);
+            int e = Integer.parseInt(end[0]) * 60 + Integer.parseInt(end[1]) + 9;
+            
+            for (int j = s; j <= e; j++) {
+                time[j]++;
+            }
+        }
+        
+        for (int i = 0; i < 1500; i++) {
+            if (time[i] > answer)
+                answer = time[i];
+        }
+        
+        return answer;
+    }
+}
