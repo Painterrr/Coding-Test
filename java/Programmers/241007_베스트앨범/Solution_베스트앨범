@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Solution {
+    static HashMap<String, Integer> map = new HashMap<>();
+    
+    public int[] solution(String[] genres, int[] plays) {
+        int[] answer = {};
+        int l = genres.length;
+        
+        for (int i = 0; i < l; i++) {
+            map.put(genres[i], map.getOrDefault(genres[i], 0) + plays[i]);
+        }
+        
+        ArrayList<Integer> idxs = new ArrayList<>();
+        while (!map.isEmpty()) {
+            String g = findBestGenre();
+            map.remove(g);
+
+            ArrayList<Song> song = new ArrayList<>();
+            makeSongList(g, l, genres, plays, song);
+
+            Collections.sort(song, new Comparator<Song>() {
+                @Override
+                public int compare(Song o1, Song o2) {
+                    return -(o1.cnt - o2.cnt);
+                }
+            });
+            
+            if (song.size() < 2) {
+                idxs.add(song.get(0).idx);
+            } else {
+                for (int i = 0; i < 2; i++) {
+                    idxs.add(song.get(i).idx);
+                }
+            }
+        }
+        
+        answer = new int[idxs.size()];
+        for (int i = 0; i < idxs.size(); i++) {
+            answer[i] = idxs.get(i);
+        }
+        
+        return answer;
+    }
+    
+    public void makeSongList(String fstG, int l, String[] genres, int[] plays, ArrayList<Song> song) {
+        for (int i = 0; i < l; i++) {
+            if (genres[i].equals(fstG)) {
+                song.add(new Song(i, genres[i], plays[i]));
+            }
+        }
+    }
+    
+    public String findBestGenre() {
+        int max = -1;
+        String maxK = "";
+        for (String k: map.keySet()) {
+            int now = map.get(k);
+            if (max < now) {
+                max = now;
+                maxK = k;
+            }
+        }
+        
+        return maxK;
+    }
+}
+
+class Song {
+    int idx;
+    String genre;
+    int cnt;
+    
+    public Song (int idx, String genre, int cnt) {
+        this.idx = idx;
+        this.genre = genre;
+        this.cnt = cnt;
+    }
+}
