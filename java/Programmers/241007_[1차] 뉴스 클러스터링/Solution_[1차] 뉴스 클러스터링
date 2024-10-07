@@ -1,0 +1,59 @@
+import java.util.*;
+
+class Solution {
+    public int solution(String str1, String str2) {
+        int answer = 0;
+        
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
+    
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        
+        fillEle(str1, list1);
+        fillEle(str2, list2);
+        
+        HashMap<String, Integer> map = new HashMap<>();
+        
+        for (int i = 0; i < list1.size(); i++) {
+            map.put(list1.get(i), map.getOrDefault(list1.get(i), 0) + 1);
+        }
+        
+        int inner = 0;
+        for (int i = 0; i < list2.size(); i++) {
+            if (map.containsKey(list2.get(i))) {
+                inner++;
+                
+                String target = list2.get(i);
+                if (map.get(target) == 1) {
+                    map.remove(target);
+                } else if (map.get(target) > 1) {
+                    map.put(target, map.get(target) - 1);
+                }
+            }
+        }
+        
+        int left = list1.size() - inner;
+        int right = list2.size() - inner;
+        int outer = left + right + inner;
+        
+        if (inner == 0 && outer == 0)
+            return 65536;
+        
+        int jacad = 65536 * inner / outer;
+        
+        return answer = jacad;
+    }
+    
+    public void fillEle(String str, ArrayList<String> list) {
+        for (int i = 0; i < str.length() - 1; i++) {
+            char a = str.charAt(i);
+            char b = str.charAt(i + 1);
+            
+            if ('a' <= a && a <= 'z'
+               && 'a' <= b && b <= 'z') {
+                list.add(str.substring(i, i + 2));
+            }
+        }
+    }
+}
