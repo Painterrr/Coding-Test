@@ -1,0 +1,24 @@
+import java.util.*;
+
+class Solution {
+    public boolean solution(String[] phone_book) {
+        HashSet<String> set = new HashSet<>();
+        
+        for (int i = 0; i < phone_book.length; i++) {
+            set.add(phone_book[i]);
+        }
+        
+        for (int i = 0; i < phone_book.length; i++) {
+            String prefix = phone_book[i];
+            StringBuffer sb = new StringBuffer();
+            
+            for (int j = 0; j < prefix.length() - 1; j++) {
+                sb.append(prefix.charAt(j));
+                if (set.contains(sb.toString()))
+                    return false;
+            }
+        }
+        
+        return true;
+    }
+}
