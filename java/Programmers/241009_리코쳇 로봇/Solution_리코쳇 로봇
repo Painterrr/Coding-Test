@@ -1,0 +1,91 @@
+import java.util.*;
+
+class Solution {
+    static char[][] matrix;
+    static boolean[][] visited;
+    static int[] G = new int[2];
+    static int n, m;
+    
+    public int solution(String[] board) {
+        int answer = -1;
+        n = board.length;
+        m = board[0].length();
+        matrix = new char[n][m];
+        visited = new boolean[n][m];
+        int[] R = new int[2];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                matrix[i][j] = board[i].charAt(j);
+                
+                if (board[i].charAt(j) == 'R') {
+                    R[0] = i;
+                    R[1] = j;
+                }
+
+                if (board[i].charAt(j) == 'G') {
+                    G[0] = i;
+                    G[1] = j;
+                }
+            }
+        }
+        
+        Queue<Block> q = new ArrayDeque<>();
+        q.add(new Block(R[0], R[1], 0));
+        visited[R[0]][R[1]] = true;
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        
+        while (!q.isEmpty()) {
+            Block now = q.poll();
+            int x = now.x;
+            int y = now.y;
+            int step = now.step;
+            
+            if (x == G[0] && y == G[1])
+                return step;
+            
+            for (int i = 0; i < 4; i++) {
+                int[] stop = checkStop(x, y, dx[i], dy[i]);
+                
+                
+                if (!visited[stop[0]][stop[1]]) {
+                    q.add(new Block(stop[0], stop[1], step + 1));
+                    visited[stop[0]][stop[1]] = true;
+                }
+            }
+        }
+        
+        return answer;
+    }
+    
+    public int[] checkStop(int x, int y, int dx, int dy) {
+        int nx = x;
+        int ny = y;
+        
+        while (true) {
+            if((nx + dx) < 0 || (nx + dx) >= n || (ny + dy) < 0 || (ny + dy) >= m)
+                break;
+            
+            if(matrix[nx + dx][ny + dy] == 'D')
+                break;
+            
+            nx += dx;
+            ny += dy;
+        }
+        
+        return new int[] {nx, ny};
+    }
+}
+
+class Block {
+    int x;
+    int y;
+    int step;
+    
+    public Block(int x, int y, int step) {
+        this.x = x;
+        this.y = y;
+        this.step = step;
+    }
+}
