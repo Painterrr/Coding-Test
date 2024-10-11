@@ -1,0 +1,6 @@
+select count(i.id) as fish_count, ni.fish_name
+from fish_info i
+join fish_name_info ni
+on i.fish_type = ni.fish_type
+group by ni.fish_name
+order by fish_count desc
