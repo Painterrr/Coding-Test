@@ -1,0 +1,33 @@
+class Solution {
+    String[] mo = {"A", "E", "I", "O", "U"};
+    StringBuffer sb = new StringBuffer();
+    int answer = -1;
+    boolean flag;
+    
+    public int solution(String word) {
+        find(word);
+        
+        return answer;
+    }
+    
+    public void find(String word) {
+        if(flag) {
+            return;
+        }
+        
+        answer++;
+        
+        if (sb.toString().equals(word)) {
+            flag = true;
+            return;
+        }
+        
+        for (int i = 0; i < 5; i++) {
+            sb.append(mo[i]);
+            if (sb.length() <= 5) {
+                find(word);
+            }                
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+}
