@@ -1,0 +1,11 @@
+select h.flavor
+from first_half h
+
+left join (
+    select flavor, sum(total_order) as july_total
+    from july
+    group by flavor
+) j
+on h.flavor = j.flavor
+order by (h.total_order + coalesce(july_total, 0)) desc
+limit 3;
