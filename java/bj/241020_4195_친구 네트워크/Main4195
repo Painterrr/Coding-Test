@@ -1,0 +1,80 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        int t = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < t; i++) {
+            int n = Integer.parseInt(br.readLine());
+            HashMap<String, String> network = new HashMap<>();
+            HashMap<String, Integer> size = new HashMap<>();
+
+            for (int j = 0; j < n; j++) {
+                st = new StringTokenizer(br.readLine());
+                String p1 = st.nextToken();
+                String p2 = st.nextToken();
+
+                if (!network.containsKey(p1)) {
+                    network.put(p1, p1);
+                    size.put(p1, 1);
+                }
+                if (!network.containsKey(p2)) {
+                    network.put(p2, p2);
+                    size.put(p2, 1);
+                }
+
+                union(network, size, p1, p2);
+
+                int size1 = size.get(find(network, p1));
+//                int size2 = size.get(find(network, p2));
+//                System.out.println("** " + p1 + "'s size: " + size1);
+//                System.out.println("** " + p2 + "'s size: " + size2);
+                bw.append(size1 + "\n");
+//                System.out.println("============================");
+            }
+        }
+
+        bw.flush();
+    }
+
+    public static String find (HashMap<String, String> network, String p) {
+//        System.out.println("** in find, " + p + "'s root: " + network.get(p));
+        if (!p.equals(network.get(p))) {
+            network.put(p, find(network, network.get(p)));
+        }
+
+        return network.get(p);
+    }
+
+    public static void union (HashMap<String, String> network,
+                              HashMap<String, Integer> size,
+                              String p1,
+                              String p2) {
+        String root1 = find(network, p1);
+        String root2 = find(network, p2);
+
+//        System.out.println("** in union: " + p1 + "/ " + root1);
+//        System.out.println("** in union: " + p2 + "/ " + root2);
+
+        if (!root1.equals(root2)) {
+            int size1 = size.get(root1);
+            int size2 = size.get(root2);
+//            System.out.println("** in union, " + p1 + "'s size: " + size1);
+//            System.out.println("** in union, " + p2 + "'s size: " + size2);
+
+            if (size1 < size2) {
+                network.put(root1, root2);
+                size.put(root2, size1 + size2);
+            } else {
+                network.put(root2, root1);
+                size.put(root1, size1 + size2);
+            }
+        }
+//        System.out.println("------------------------------");
+    }
+}
