@@ -1,0 +1,69 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static HashMap<String, String> roots;
+    static HashMap<String, Integer> size;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        int t = Integer.parseInt(br.readLine());
+        for (int i = 0; i < t; i++) {
+            int f = Integer.parseInt(br.readLine());
+            roots = new HashMap<>();
+            size = new HashMap<>();
+
+            for (int j = 0; j < f; j++) {
+                st = new StringTokenizer(br.readLine());
+                String p1 = st.nextToken();
+                String p2 = st.nextToken();
+
+                if (!roots.containsKey(p1)) {
+                    roots.put(p1, p1);
+                    size.put(p1, 1);
+                }
+
+                if (!roots.containsKey(p2)) {
+                    roots.put(p2, p2);
+                    size.put(p2, 1);
+                }
+
+                union(p1, p2);
+
+                int cnt = size.get(find(p1));
+                bw.append(cnt + "\n");
+            }
+        }
+
+        bw.flush();
+    }
+
+    public static String find (String p) {
+        if (!roots.get(p).equals(p)) {
+            roots.put(p, find(roots.get(p)));
+        }
+        
+        return roots.get(p);
+    }
+
+    public static void union (String p1, String p2) {
+        String A = find(p1);
+        String B = find(p2);
+
+        if (!A.equals(B)) {
+            int sizeA = size.get(A);
+            int sizeB = size.get(B);
+
+            if (sizeA < sizeB) {
+                roots.put(B, A);
+                size.put(A, sizeA + sizeB);
+            } else {
+                roots.put(A, B);
+                size.put(B, sizeA + sizeB);
+            }
+        }
+    }
+}
