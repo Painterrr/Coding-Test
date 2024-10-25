@@ -1,0 +1,62 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static int[] roots;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+
+        roots = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            roots[i] = i;
+        }
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            for (int j = 0; j < n; j++) {
+                if (st.nextToken().equals("1")) {
+                    union(i + 1, j + 1);
+                }
+            }
+        }
+
+        st = new StringTokenizer(br.readLine());
+        int startCity = find(Integer.parseInt(st.nextToken()));
+        int startRoot = roots[startCity];
+        for (int i = 1; i < m; i++) {
+            int city = Integer.parseInt(st.nextToken());
+            if (startRoot != roots[find(city)]) {
+                System.out.println("NO");
+                return;
+            }
+        }
+
+        System.out.println("YES");
+    }
+
+    public static int find (int n) {
+        if (roots[n] != n) {
+            return roots[n] = find(roots[n]);
+        } else {
+            return roots[n];
+        }
+    }
+
+    public static void union (int a, int b) {
+        int A = find(a);
+        int B = find(b);
+
+        if (A < B) {
+            roots[B] = A;
+        } else {
+            roots[A] = B;
+        }
+    }
+}
