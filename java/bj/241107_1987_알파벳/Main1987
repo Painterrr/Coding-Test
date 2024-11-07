@@ -1,0 +1,49 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    static int r, c, ans;
+    static String[][] board;
+    static HashSet<String> alpha = new HashSet<>();
+    static int[] dx = {-1, 0, 1, 0};
+    static int[] dy = {0, 1, 0, -1};
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        r = Integer.parseInt(st.nextToken());
+        c = Integer.parseInt(st.nextToken());
+        board = new String[r + 1][c + 1];
+
+        for (int i = 1; i <= r; i++) {
+            String line = br.readLine();
+            for (int j = 1; j <= c; j++) {
+                board[i][j] = line.substring(j - 1, j);
+            }
+        }
+        alpha.add(board[1][1]);
+
+        move(1, 1, 1);
+
+        System.out.println(ans);
+    }
+
+    public static void move (int x, int y, int step) {
+        ans = Math.max(ans, step);
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (1 <= nx && nx <= r
+                    && 1 <= ny && ny <= c) {
+                if (!alpha.contains(board[nx][ny])) {
+                    alpha.add(board[nx][ny]);
+                    move(nx, ny, step + 1);
+                    alpha.remove(board[nx][ny]);
+                }
+            }
+        }
+    }
+}
